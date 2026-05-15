@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Not Found</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Fullscreen Menu Overlay -->
+    <div class="menu-overlay" id="menuOverlay">
+        <div class="menu-close" id="menuClose">CLOSE</div>
+        <div class="menu-links">
+            <a href="index.html" class="menu-link">HOME</a>
+            <a href="index.html#about" class="menu-link">ABOUT</a>
+            <a href="index.html#events" class="menu-link">LIVE EVENTS</a>
+            <a href="index.html#main-events" class="menu-link">FLAGSHIPS</a>
+            <a href="index.html#team" class="menu-link">EXE.COM</a>
+            <a href="index.html#seeds" class="menu-link">SEEDS</a>
+            <a href="mentors.html" class="menu-link">MENTORS</a>
+        </div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+
+    <!-- Minimal Nav -->
+    <nav class="nav-minimal">
+        <a href="index.html" class="logo-lusion">IEDC VJCET.</a>
+        <div style="display: flex; gap: 1rem;">
+            <a href="index.html" class="menu-pill" style="background-color: transparent; border: 1px solid #FFF; color: #FFF;">Back</a>
+            <a href="#menu" class="menu-pill" id="menuToggle">Menu</a>
+        </div>
+    </nav>
+
+    <style>
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
+    <main>
+        <!-- Massive Hero Section -->
+        <section class="hero-lusion" style="align-items: center; text-align: center; position: relative;">
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; z-index: -1; pointer-events: none;">
+                <h1 class="massive-text outline" style="font-size: clamp(8rem, 25vw, 30rem); opacity: 0.05; line-height: 0.8; margin-left: -5%;">ERROR</h1>
+                <h1 class="massive-text outline" style="font-size: clamp(8rem, 25vw, 30rem); opacity: 0.05; line-height: 0.8; margin-left: 5%;">ERROR</h1>
+            </div>
+
+            <h1 class="massive-text" style="font-size: clamp(8rem, 20vw, 22rem);">404</h1>
+            <h3 style="font-size: clamp(1.5rem, 4vw, 3rem); letter-spacing: 0.1em; opacity: 0; animation: slideUpFade 1s var(--transition-smooth) 0.2s forwards; text-transform: uppercase;">
+                PAGE NOT FOUND
+            </h3>
+            
+            <div class="terminal-box" style="margin: 3rem auto 2rem; width: 100%; max-width: 500px; text-align: left; background: #111; color: #0f0; padding: 1.5rem; border-radius: 12px; font-family: monospace; font-size: 1rem; line-height: 1.6; opacity: 0; animation: slideUpFade 1s var(--transition-smooth) 0.3s forwards; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                <p id="typewriter" style="margin: 0;"></p>
+            </div>
+            
+            <a href="index.html" class="menu-pill" style="opacity: 0; animation: slideUpFade 1s var(--transition-smooth) 0.5s forwards; display: inline-block; margin-top: 1rem; background-color: var(--text-primary); color: var(--bg-white); border: 1px solid var(--text-primary); padding: 1rem 3rem;">RETURN TO MAINFRAME</a>
+        </section>
+    </main>
+
+    <!-- Lusion JS: Cursor & Scroll Animation & Menu -->
+    <script>
+        // Custom Cursor
+        const cursor = document.getElementById('cursor');
+        
+        document.addEventListener('mousemove', e => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        const hoverElements = document.querySelectorAll('a, .menu-pill, .menu-close');
+        hoverElements.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+        });
+
+        // Menu Toggle Logic
+        const menuToggle = document.getElementById('menuToggle');
+        const menuClose = document.getElementById('menuClose');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const menuLinks = document.querySelectorAll('.menu-link');
+
+        menuToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            menuOverlay.classList.add('active');
+        });
+
+        menuClose.addEventListener('click', () => {
+            menuOverlay.classList.remove('active');
+        });
+
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menuOverlay.classList.remove('active');
+            });
+        });
+
+        // Typewriter Effect
+        const textToType = "> SYSTEM LOG INITIATED...\n> ERROR CODE: 404_NOT_FOUND\n> TARGET SECTOR: UNKNOWN\n> RECOMMENDATION: EVACUATE";
+        let index = 0;
+        const speed = 40; 
+        const typeWriterElement = document.getElementById('typewriter');
+        
+        function typeWriter() {
+            if (index < textToType.length) {
+                if(textToType.charAt(index) === '\n') {
+                    typeWriterElement.innerHTML += '<br>';
+                } else {
+                    typeWriterElement.innerHTML += textToType.charAt(index);
+                }
+                index++;
+                setTimeout(typeWriter, speed);
+            } else {
+                typeWriterElement.innerHTML += '<span style="animation: blink 1s infinite;">_</span>';
+            }
+        }
+        
+        // Start typing after initial slide up animation
+        setTimeout(typeWriter, 1200);
+    </script>
+</body>
+
+</html>

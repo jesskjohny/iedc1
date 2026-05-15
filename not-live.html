@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Not Live | IEDC VJCET</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Fullscreen Menu Overlay -->
+    <div class="menu-overlay" id="menuOverlay">
+        <div class="menu-close" id="menuClose">CLOSE</div>
+        <div class="menu-links">
+            <a href="index.html" class="menu-link">HOME</a>
+            <a href="index.html#about" class="menu-link">ABOUT</a>
+            <a href="index.html#events" class="menu-link">LIVE EVENTS</a>
+            <a href="index.html#main-events" class="menu-link">FLAGSHIPS</a>
+            <a href="index.html#team" class="menu-link">EXE.COM</a>
+            <a href="index.html#seeds" class="menu-link">SEEDS</a>
+            <a href="mentors.html" class="menu-link">MENTORS</a>
+        </div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+
+    <!-- Minimal Nav -->
+    <nav class="nav-minimal">
+        <a href="index.html" style="text-decoration: none; color: inherit;"><div class="logo-lusion">IEDC VJCET.</div></a>
+        <div style="display: flex; gap: 1rem;">
+            <a href="index.html" class="menu-pill" style="background-color: transparent; border: 1px solid #FFF; color: #FFF;">Back</a>
+            <a href="#menu" class="menu-pill" id="menuToggle">Menu</a>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Massive Hero Section -->
+        <section class="hero-lusion" style="align-items: center; text-align: center; justify-content: center;">
+            <h1 class="massive-text outline" style="font-size: clamp(4rem, 10vw, 15rem);">EVENT</h1>
+            <h1 class="massive-text" style="font-size: clamp(4rem, 10vw, 15rem); color: var(--text-primary);">NOT LIVE</h1>
+            <h3 style="font-size: clamp(1.5rem, 4vw, 3rem); letter-spacing: 0.1em; opacity: 0; animation: slideUpFade 1s var(--transition-smooth) 0.2s forwards; text-transform: uppercase; margin-top: 2rem;">
+                REGISTRATIONS ARE CLOSED
+            </h3>
+            
+            <p class="hero-desc" style="max-width: 600px; margin: 2rem auto; opacity: 0; animation: slideUpFade 1s var(--transition-smooth) 0.3s forwards;">
+                This event is currently not accepting registrations. Stay tuned to our social media channels for updates on when registrations will open!
+            </p>
+            
+            <a href="javascript:history.back()" class="menu-pill" style="opacity: 0; animation: slideUpFade 1s var(--transition-smooth) 0.5s forwards; display: inline-block; margin-top: 1rem; background-color: var(--text-primary); color: var(--bg-white); border: 1px solid var(--text-primary); padding: 1rem 3rem;">GO BACK</a>
+        </section>
+    </main>
+
+    <!-- Lusion JS: Cursor & Scroll Animation & Menu -->
+    <script>
+        // Custom Cursor
+        const cursor = document.getElementById('cursor');
+        
+        document.addEventListener('mousemove', e => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        const hoverElements = document.querySelectorAll('a, .menu-pill, .menu-close, button');
+        hoverElements.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+        });
+
+        // Menu Toggle Logic
+        const menuToggle = document.getElementById('menuToggle');
+        const menuClose = document.getElementById('menuClose');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const menuLinks = document.querySelectorAll('.menu-link');
+
+        menuToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            menuOverlay.classList.add('active');
+        });
+
+        menuClose.addEventListener('click', () => {
+            menuOverlay.classList.remove('active');
+        });
+
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menuOverlay.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>

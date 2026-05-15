@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IEDC VJCET</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body style="overflow: hidden;">
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-text">
+            <span>IEDC</span><span style="margin-left: 0.3em; color: var(--text-secondary);">VJCET</span>
+        </div>
+        <div class="preloader-progress"></div>
+    </div>
+    <script>
+        if (sessionStorage.getItem('siteLoaded')) {
+            document.getElementById('preloader').style.display = 'none';
+            document.body.style.overflow = '';
+        }
+    </script>
+    <!-- Fullscreen Menu Overlay -->
+    <div class="menu-overlay" id="menuOverlay">
+        <div class="menu-close" id="menuClose">CLOSE</div>
+        <div class="menu-links">
+            <a href="index.html" class="menu-link">HOME</a>
+            <a href="#about" class="menu-link">ABOUT</a>
+            <a href="#events" class="menu-link">LIVE EVENTS</a>
+            <a href="#main-events" class="menu-link">FLAGSHIPS</a>
+            <a href="#team" class="menu-link">EXE.COM</a>
+            <a href="#seeds" class="menu-link">SEEDS</a>
+            <a href="mentors.html" class="menu-link">MENTORS</a>
+        </div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+
+    <!-- Minimal Nav -->
+    <nav class="nav-minimal">
+        <div class="logo-lusion">IEDC VJCET.</div>
+        <a href="#menu" class="menu-pill" id="menuToggle">Menu</a>
+    </nav>
+
+    <main>
+        <!-- Massive Hero Section -->
+        <section class="hero-lusion" style="position: relative; z-index: 1;">
+
+            <!-- Light Background Animation -->
+            <div class="bg-animation">
+                <div class="glow-orb orb-1"></div>
+                <div class="glow-orb orb-2"></div>
+                <div class="glow-orb orb-3"></div>
+            </div>
+
+            <h1 class="massive-text">INNOVATE</h1>
+            <h1 class="massive-text outline" style="margin-left: 10%;">ELEVATE</h1>
+            <h3 style="font-size: clamp(0.75rem, 2vw, 1rem); font-weight: 600; margin-left: 15%; margin-top: 1rem; letter-spacing: 0.2em; opacity: 0; animation: slideUpFade 1s var(--transition-smooth) 0.2s forwards; text-transform: uppercase;">
+                IEDC VISWAJYOTHI COLLEGE OF ENGINEERING AND TECHNOLOGY
+            </h3>
+        </section>
+
+        <!-- About Mission Section -->
+        <section class="section-lusion" id="about" style="padding-top: 5rem;">
+            <h2 class="section-title-large reveal-up">ABOUT.</h2>
+            <div class="grid-layout" style="display: block;">
+                <p class="reveal-up" style="font-size: 2rem; line-height: 1.6; max-width: 1000px; font-weight: 500;">
+                    The official page of Innovation and Entrepreneurship Development Centre of Viswajyothi College Of Engineering And Technology. We bridge the gap between ideas and execution.
+                </p>
+                <p class="reveal-up" style="font-size: 1.2rem; color: var(--text-secondary); margin-top: 2rem; max-width: 800px; line-height: 1.8; transition-delay: 0.1s;">
+                    Our primary objective is to cultivate an ecosystem that fosters innovation, empowers aspiring entrepreneurs, and transforms raw concepts into market-ready solutions. Through continuous learning, mentorship, and hands-on projects, IEDC VJCET stands as the bedrock of student-led technological advancement.
+                </p>
+            </div>
+        </section>
+
+        <!-- Events Section -->
+        <section class="section-bg-white" id="events">
+            <h2 class="section-title-large reveal-up">LIVE EVENTS.</h2>
+            
+            <div class="grid-layout" style="display: block; margin-bottom: 5rem;">
+                <p class="reveal-up" style="font-size: 2rem; line-height: 1.6; max-width: 1000px; font-weight: 500;">
+                    System Ready. Engage. Execute.
+                </p>
+                <p class="reveal-up" style="font-size: 1.2rem; color: var(--text-secondary); margin-top: 2rem; max-width: 800px; line-height: 1.8; transition-delay: 0.1s;">
+                    Our live events are dynamic arenas where theoretical knowledge meets practical application. Ranging from high-stakes hackathons to intensive pitch deck competitions and AI-driven workshops, these sessions are designed to push boundaries.
+                </p>
+            </div>
+
+            <div class="grid-layout">
+                <a href="404.html" class="lusion-card reveal-up">
+                    <div>
+                        <div class="card-subtitle">HCK-09</div>
+                        <h3 class="card-title">COMING SOON</h3>
+                    </div>
+                    <div class="card-btn">Stay Tuned</div>
+                </a>
+
+                <a href="404.html" class="lusion-card reveal-up" style="transition-delay: 0.1s;">
+                    <div>
+                        <div class="card-subtitle">PCH-XR</div>
+                        <h3 class="card-title">PITCH DECK</h3>
+                    </div>
+                    <div class="card-btn">Stay Tuned</div>
+                </a>
+
+                <a href="404.html" class="lusion-card reveal-up" style="transition-delay: 0.2s;">
+                    <div>
+                        <div class="card-subtitle">WKS-AI</div>
+                        <h3 class="card-title">AI WORKSHOP</h3>
+                    </div>
+                    <div class="card-btn">Stay Tuned</div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Main Events / Sponsors Section -->
+        <section class="section-lusion" id="main-events">
+            <h2 class="section-title-large reveal-up" style="border-bottom: none;">FLAGSHIP.</h2>
+            
+            <div class="grid-layout">
+                <a href="idea-fest.html" class="lusion-card reveal-up">
+                    <div>
+                        <div class="card-subtitle">FLAGSHIP</div>
+                        <h3 class="card-title">IDEA FEST</h3>
+                    </div>
+                    <div class="card-btn">Explore</div>
+                </a>
+                <a href="gen-ai.html" class="lusion-card reveal-up">
+                    <div>
+                        <div class="card-subtitle">WORKSHOP</div>
+                        <h3 class="card-title">GEN AI</h3>
+                    </div>
+                    <div class="card-btn">Explore</div>
+                </a>
+                <a href="thread-zero.html" class="lusion-card reveal-up">
+                    <div>
+                        <div class="card-subtitle">WORKSHOP</div>
+                        <h3 class="card-title">THREAD ZERO</h3>
+                    </div>
+                    <div class="card-btn">Explore</div>
+                </a>
+                <a href="decode-recode.html" class="lusion-card reveal-up">
+                    <div>
+                        <div class="card-subtitle">HACKATHON</div>
+                        <h3 class="card-title">DECODE&RECODE</h3>
+                    </div>
+                    <div class="card-btn">Explore</div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section class="section-bg-white" id="team">
+            <h2 class="section-title-large reveal-up">EXE.COM</h2>
+            
+            <div class="team-grid-lusion" id="excomGrid">
+                <div class="team-member reveal-up" data-img="assets/team/dr-arun-k.png" data-name="DR. ARUN K" data-role="NODAL OFFICER" data-dept="Faculty" data-github="" data-linkedin="">
+                    <div class="team-img-wrapper"><img src="assets/team/dr-arun-k.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div>
+                    <h4 class="team-name">DR. ARUN K</h4>
+                    <p class="team-role">NODAL OFFICER</p>
+                </div>
+                <div class="team-member reveal-up" data-img="assets/team/mrs-anju-markose.png" data-name="MRS. ANJU MARKOSE" data-role="NODAL OFFICER" data-dept="Faculty" data-github="" data-linkedin="">
+                    <div class="team-img-wrapper"><img src="assets/team/mrs-anju-markose.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div>
+                    <h4 class="team-name">MRS. ANJU MARKOSE</h4>
+                    <p class="team-role">NODAL OFFICER</p>
+                </div>
+                <div class="team-member reveal-up" data-img="assets/team/albin-benny.png" data-name="ALBIN BENNY" data-role="STUDENTS LEAD" data-dept="Artificial Intelligence and Data Science" data-github="https://github.com/" data-linkedin="https://linkedin.com/">
+                    <div class="team-img-wrapper"><img src="assets/team/albin-benny.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div>
+                    <h4 class="team-name">ALBIN BENNY</h4>
+                    <p class="team-role">STUDENTS LEAD</p>
+                </div>
+                <div class="team-member reveal-up" data-img="assets/team/adithya-maria-jose.png" data-name="ADITHYA MARIA JOSE" data-role="STUDENTS LEAD" data-dept="Computer Science and Design" data-github="https://github.com/" data-linkedin="https://linkedin.com/">
+                    <div class="team-img-wrapper"><img src="assets/team/adithya-maria-jose.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div>
+                    <h4 class="team-name">ADITHYA MARIA JOSE</h4>
+                    <p class="team-role">STUDENTS LEAD</p>
+                </div>
+                <div class="team-member reveal-up" data-img="assets/team/athul-krishina-l.png" data-name="ATHUL KRISHINA L" data-role="FINANCE LEAD" data-dept="Artificial Intelligence and Data Science" data-github="https://github.com/" data-linkedin="https://linkedin.com/">
+                    <div class="team-img-wrapper"><img src="assets/team/athul-krishina-l.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div>
+                    <h4 class="team-name">ATHUL KRISHINA L</h4>
+                    <p class="team-role">FINANCE LEAD</p>
+                </div>
+                <div class="team-member reveal-up" data-img="assets/team/nithya-k.png" data-name="NITHYA K" data-role="WOMENS LEAD" data-dept="Artificial Intelligence and Data Science" data-github="https://github.com/" data-linkedin="https://linkedin.com/">
+                    <div class="team-img-wrapper"><img src="assets/team/nithya-k.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div>
+                    <h4 class="team-name">NITHYA K</h4>
+                    <p class="team-role">WOMENS LEAD</p>
+                </div>
+                <div class="team-member reveal-up" data-img="assets/team/ann-mary-cyriac.png" data-name="ANN MARY CYRIAC" data-role="TECHNICAL LEAD" data-dept="Computer Science and Design" data-github="https://github.com/" data-linkedin="https://linkedin.com/">
+                    <div class="team-img-wrapper"><img src="assets/team/ann-mary-cyriac.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div>
+                    <h4 class="team-name">ANN MARY CYRIAC</h4>
+                    <p class="team-role">TECHNICAL LEAD</p>
+                </div>
+                <div class="team-member reveal-up" data-img="assets/team/nikhil-biby.png" data-name="NIKHIL BIBY" data-role="QUALITY AND OP LEAD" data-dept="Electrical Engineering" data-github="https://github.com/" data-linkedin="https://linkedin.com/">
+                    <div class="team-img-wrapper"><img src="assets/team/nikhil-biby.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div>
+                    <h4 class="team-name">NIKHIL BIBY</h4>
+                    <p class="team-role">QUALITY AND OP LEAD</p>
+                </div>
+                <div class="team-member reveal-up" data-img="assets/team/diya-ivy.png" data-name="DIYA IVY" data-role="COMMUNITY LEAD" data-dept="Civil Engineering" data-github="https://github.com/" data-linkedin="https://linkedin.com/">
+                    <div class="team-img-wrapper"><img src="assets/team/diya-ivy.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div>
+                    <h4 class="team-name">DIYA IVY</h4>
+                    <p class="team-role">COMMUNITY LEAD</p>
+                </div>
+                <div class="team-member reveal-up" data-img="assets/team/jess-k-johny.png" data-name="JESS K JOHNY" data-role="BRANDING LEAD" data-dept="Artificial Intelligence and Data Science" data-github="https://github.com/jesskjohny" data-linkedin="https://linkedin.com/in/jesskjohny">
+                    <div class="team-img-wrapper"><img src="assets/team/jess-k-johny.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div>
+                    <h4 class="team-name">JESS K JOHNY</h4>
+                    <p class="team-role">BRANDING LEAD</p>
+                </div>
+                <div class="team-member reveal-up" data-img="assets/team/kuriakose-jomon.png" data-name="KURIAKOSE JOMON" data-role="CREATIVE LEAD" data-dept="Information Technology" data-github="https://github.com/" data-linkedin="https://linkedin.com/">
+                    <div class="team-img-wrapper"><img src="assets/team/kuriakose-jomon.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div>
+                    <h4 class="team-name">KURIAKOSE JOMON</h4>
+                    <p class="team-role">CREATIVE LEAD</p>
+                </div>
+                <div class="team-member reveal-up" data-img="assets/team/bestin-shaju.png" data-name="BESTIN SHAJU" data-role="IPR AND RESEARCH LEAD" data-dept="Mechanical Engineering" data-github="https://github.com/" data-linkedin="https://linkedin.com/">
+                    <div class="team-img-wrapper"><img src="assets/team/bestin-shaju.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div>
+                    <h4 class="team-name">BESTIN SHAJU</h4>
+                    <p class="team-role">IPR AND RESEARCH LEAD</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seeds Section -->
+        <section class="section-lusion" id="seeds">
+            <h2 class="section-title-large reveal-up">SEEDS.</h2>
+            <div class="team-grid-lusion">
+                <div class="team-member reveal-up"><div class="team-img-wrapper"><img src="assets/team/adarsh-naijo.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div><h4 class="team-name">ADARSH NAIJO</h4><p class="team-role">STUDENTS SEED</p></div>
+                <div class="team-member reveal-up"><div class="team-img-wrapper"><img src="assets/team/cheriyan-k-cheriyan.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div><h4 class="team-name">CHERIYAN K</h4><p class="team-role">STUDENTS SEED</p></div>
+                <div class="team-member reveal-up"><div class="team-img-wrapper"><img src="assets/team/aksa-cyriac.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div><h4 class="team-name">AKSA CYRIAC</h4><p class="team-role">STUDENTS SEED</p></div>
+                <div class="team-member reveal-up"><div class="team-img-wrapper"><img src="assets/team/sneha-sudhan.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div><h4 class="team-name">SNEHA SUDHAN</h4><p class="team-role">STUDENTS SEED</p></div>
+                
+                <div class="team-member reveal-up"><div class="team-img-wrapper"><img src="assets/team/rony-jose.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div><h4 class="team-name">RONY JOSE</h4><p class="team-role">FINANCE SEED</p></div>
+                <div class="team-member reveal-up"><div class="team-img-wrapper"><img src="assets/team/anunanda-k-s.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div><h4 class="team-name">ANUNANDA K S</h4><p class="team-role">FINANCE SEED</p></div>
+                
+                <div class="team-member reveal-up"><div class="team-img-wrapper"><img src="assets/team/albiya-mariya.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div><h4 class="team-name">ALBIYA MARIYA</h4><p class="team-role">WOMENS SEED</p></div>
+                <div class="team-member reveal-up"><div class="team-img-wrapper"><img src="assets/team/emiya-varghese.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div><h4 class="team-name">EMIYA VARGHESE</h4><p class="team-role">WOMENS SEED</p></div>
+                
+                <div class="team-member reveal-up"><div class="team-img-wrapper"><img src="assets/team/chris-george-rain.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div><h4 class="team-name">CHRIS GEORGE</h4><p class="team-role">TECHNICAL SEED</p></div>
+                <div class="team-member reveal-up"><div class="team-img-wrapper"><img src="assets/team/jisso-raju.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div><h4 class="team-name">JISSO RAJU</h4><p class="team-role">TECHNICAL SEED</p></div>
+                
+                <div class="team-member reveal-up"><div class="team-img-wrapper"><img src="assets/team/sreedev-hrushikesh.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div><h4 class="team-name">SREEDEV H.</h4><p class="team-role">QUALITY SEED</p></div>
+                <div class="team-member reveal-up"><div class="team-img-wrapper"><img src="assets/team/milan-sunny.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div><h4 class="team-name">MILAN SUNNY</h4><p class="team-role">QUALITY SEED</p></div>
+                
+                <div class="team-member reveal-up"><div class="team-img-wrapper"><img src="assets/team/valencia-sebastian.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div><h4 class="team-name">VALENCIA S.</h4><p class="team-role">COMMUNITY SEED</p></div>
+                <div class="team-member reveal-up"><div class="team-img-wrapper"><img src="assets/team/david-tomy.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div><h4 class="team-name">DAVID TOMY</h4><p class="team-role">COMMUNITY SEED</p></div>
+                
+                <div class="team-member reveal-up"><div class="team-img-wrapper"><img src="assets/team/drisya-santhosh.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div><h4 class="team-name">DRISYA S.</h4><p class="team-role">BRANDING SEED</p></div>
+                <div class="team-member reveal-up"><div class="team-img-wrapper"><img src="assets/team/aksa-rose-binu.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div><h4 class="team-name">AKSA ROSE</h4><p class="team-role">BRANDING SEED</p></div>
+                
+                <div class="team-member reveal-up"><div class="team-img-wrapper"><img src="assets/team/theertha-sreedharan.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div><h4 class="team-name">THEERTHA S.</h4><p class="team-role">CREATIVE SEED</p></div>
+                <div class="team-member reveal-up"><div class="team-img-wrapper"><img src="assets/team/jayasankar-binu.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div><h4 class="team-name">JAYASANKAR B.</h4><p class="team-role">CREATIVE SEED</p></div>
+                
+                <div class="team-member reveal-up"><div class="team-img-wrapper"><img src="assets/team/jewel-k-jose.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div><h4 class="team-name">JEWEL K JOSE</h4><p class="team-role">RESEARCH SEED</p></div>
+                <div class="team-member reveal-up"><div class="team-img-wrapper"><img src="assets/team/blessy-k-shaju.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div><h4 class="team-name">BLESSY K SHAJU</h4><p class="team-role">RESEARCH SEED</p></div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-lusion">
+        <h2 class="footer-massive">IEDC<br>VJCET</h2>
+        
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>NAVIGATION</h4>
+                <a href="#events">Live Events</a>
+                <a href="#team">Team</a>
+                <a href="mentors.html">Mentors</a>
+                <a href="#main-events">Flagships</a>
+            </div>
+            <div class="footer-col">
+                <h4>SOCIALS</h4>
+                <a href="https://www.instagram.com/iedc__vjcet" target="_blank">Instagram</a>
+                <a href="https://discord.gg/hWqNcGG5" target="_blank">Discord</a>
+                <a href="https://chat.whatsapp.com/JZLwAem7IT2Iys1chXOYlR" target="_blank">WhatsApp</a>
+            </div>
+            <div class="footer-col">
+                <h4>LOCATION</h4>
+                <p style="font-size: 1.2rem; line-height: 1.5; color: rgba(255,255,255,0.7);">
+                    Viswajyothi College of Engineering and Technology<br>
+                    Vazhakulam, Muvattupuzha
+                </p>
+            </div>
+        </div>
+        
+        <p style="text-align: center; margin-top: 5rem; color: rgba(255,255,255,0.3); font-family: monospace;">
+            © 2026 IEDC VJCET. DESIGNED BY JESS K JOHNY.
+        </p>
+    </footer>
+
+    <!-- Lusion JS: Cursor & Scroll Animation -->
+    <script>
+        // Custom Cursor
+        const cursor = document.getElementById('cursor');
+        
+        document.addEventListener('mousemove', e => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        const hoverElements = document.querySelectorAll('a, .menu-pill, .lusion-card');
+        hoverElements.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+        });
+
+        // Scroll Reveal
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-up').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Menu Toggle Logic
+        const menuToggle = document.getElementById('menuToggle');
+        const menuClose = document.getElementById('menuClose');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const menuLinks = document.querySelectorAll('.menu-link');
+
+        menuToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            menuOverlay.classList.add('active');
+        });
+
+        menuClose.addEventListener('click', () => {
+            menuOverlay.classList.remove('active');
+        });
+
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menuOverlay.classList.remove('active');
+            });
+        });
+
+        // Preloader Logic
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            if (preloader && !sessionStorage.getItem('siteLoaded')) {
+                sessionStorage.setItem('siteLoaded', 'true');
+                setTimeout(() => {
+                    preloader.classList.add('hidden');
+                    document.body.style.overflow = '';
+                    setTimeout(() => {
+                        preloader.style.display = 'none';
+                    }, 1000); // Wait for transition to finish
+                }, 1800); // Minimum 1.8s load time for effect
+            }
+        });
+    </script>
+    <!-- Member Profile Popup -->
+    <div class="member-popup-overlay" id="memberPopup">
+        <div class="member-popup">
+            <span class="member-popup-close" id="popupClose">✕</span>
+            <img class="member-popup-img" id="popupImg" src="" alt="">
+            <div class="member-popup-info">
+                <div class="member-popup-name" id="popupName"></div>
+                <div class="member-popup-role" id="popupRole"></div>
+                <div class="member-popup-dept" id="popupDept"></div>
+                <div class="team-social-btns" id="popupSocialBtns" style="margin-top:1.2rem;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // SVG icons
+        const githubSVG = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222 0 1.606-.015 2.898-.015 3.293 0 .322.216.694.825.576C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>`;
+        const linkedinSVG = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>`;
+
+        // Wire up popup for each excom member
+        document.querySelectorAll('#excomGrid .team-member').forEach(member => {
+            member.querySelector('.team-img-wrapper').addEventListener('click', () => {
+                document.getElementById('popupImg').src = member.dataset.img;
+                document.getElementById('popupImg').onerror = function(){ this.src='assets/team/placeholder.png'; };
+                document.getElementById('popupName').textContent = member.dataset.name;
+                document.getElementById('popupRole').textContent = member.dataset.role;
+                document.getElementById('popupDept').textContent = member.dataset.dept || '';
+
+                // Build social buttons inside popup
+                const btns = document.getElementById('popupSocialBtns');
+                btns.innerHTML = '';
+                if (member.dataset.github) {
+                    const a = document.createElement('a');
+                    a.href = member.dataset.github; a.target = '_blank'; a.rel = 'noopener';
+                    a.className = 'team-social-btn'; a.innerHTML = githubSVG;
+                    btns.appendChild(a);
+                }
+                if (member.dataset.linkedin) {
+                    const a = document.createElement('a');
+                    a.href = member.dataset.linkedin; a.target = '_blank'; a.rel = 'noopener';
+                    a.className = 'team-social-btn'; a.innerHTML = linkedinSVG;
+                    btns.appendChild(a);
+                }
+
+                document.getElementById('memberPopup').classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        // Close popup
+        document.getElementById('popupClose').addEventListener('click', closePopup);
+        document.getElementById('memberPopup').addEventListener('click', function(e) {
+            if (e.target === this) closePopup();
+        });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closePopup(); });
+        function closePopup() {
+            document.getElementById('memberPopup').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    </script>
+</body>
+</html>
