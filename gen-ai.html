@@ -49,22 +49,63 @@
                         <h3 style="font-size: 1.2rem; margin-bottom: 1rem; color: var(--text-secondary);">EVENT INTEL</h3>
                         <div style="font-size: 1.1rem; line-height: 1.8;">
                             <strong>DATE:</strong> APRIL 3, 2025<br><strong>SPEAKER:</strong> ALOSH JOSHY<br><strong>FOCUS:</strong> GENERATIVE AI & PROMPTING<br><strong>LEVEL:</strong> ALL OPERATIVES
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEN AI | IEDC VJCET</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Fullscreen Menu Overlay -->
+    <div class="menu-overlay" id="menuOverlay">
+        <div class="menu-close" id="menuClose">CLOSE</div>
+        <div class="menu-links">
+            <a href="index.html" class="menu-link">HOME</a>
+            <a href="index.html#about" class="menu-link">ABOUT</a>
+            <a href="index.html#events" class="menu-link">LIVE EVENTS</a>
+            <a href="index.html#main-events" class="menu-link">FLAGSHIPS</a>
+            <a href="index.html#team" class="menu-link">EXE.COM</a>
+            <a href="index.html#seeds" class="menu-link">SEEDS</a>
+            <a href="mentors.html" class="menu-link">MENTORS</a>
+        </div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+
+    <!-- Minimal Nav -->
+    <nav class="nav-minimal">
+        <a href="index.html" style="text-decoration: none; color: inherit;"><div class="logo-lusion">IEDC VJCET.</div></a>
+        <div style="display: flex; gap: 1rem;">
+            <a href="index.html" class="menu-pill" style="background-color: transparent; border: 1px solid #FFF; color: #FFF;">Back</a>
+            <a href="#menu" class="menu-pill" id="menuToggle">Menu</a>
+        </div>
+    </nav>
+
+    <main>
+        <section class="section-lusion" style="padding-top: 15vh;">
+            <div class="grid-layout" style="display: block;">
+                <p class="reveal-up" style="font-size: 1rem; letter-spacing: 0.1em; color: var(--text-secondary); margin-bottom: 1rem;">// MAIN_EVENT_02</p>
+                <h1 class="massive-text reveal-up" style="font-size: clamp(3rem, 8vw, 8rem); line-height: 1;">GEN</h1>
+                <h1 class="massive-text outline reveal-up" style="font-size: clamp(3rem, 8vw, 8rem); line-height: 1; margin-left: 5%;">AI</h1>
+                
+                <p class="reveal-up" style="font-size: 1.5rem; line-height: 1.6; max-width: 800px; font-weight: 500; margin-top: 3rem;">
+                    A workshop conducted by IEDC VJCET on basis of generative AI tools and prompting, and proper use of AI tools. Session handled by Alosh Joshy on April 3rd, 2025.<br><br>Master the art of prompt engineering and discover how to integrate generative AI into your professional workflow. This session focuses on the practical application of cutting-edge AI models.
+                </p>
+                
+                <div class="reveal-up" style="margin-top: 3rem; display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+                    <div style="padding: 2rem; border: 1px solid rgba(0,0,0,0.1); border-radius: 12px;">
+                        <h3 style="font-size: 1.2rem; margin-bottom: 1rem; color: var(--text-secondary);">EVENT INTEL</h3>
+                        <div style="font-size: 1.1rem; line-height: 1.8;">
+                            <strong>DATE:</strong> APRIL 3, 2025<br><strong>SPEAKER:</strong> ALOSH JOSHY<br><strong>FOCUS:</strong> GENERATIVE AI & PROMPTING<br><strong>LEVEL:</strong> ALL OPERATIVES
                         </div>
                     </div>
                 </div>
                 
 
 
-                <!-- Gallery Section -->
-                <div class="reveal-up" style="margin-top: 8rem;">
-                    <h2 class="massive-text outline" style="font-size: clamp(2rem, 5vw, 4rem); margin-bottom: 2rem; letter-spacing: -0.02em;">GALLERY.</h2>
-                    <div class="gallery-grid">
-                        <div class="gallery-item"></div>
-                        <div class="gallery-item"></div>
-                        <div class="gallery-item"></div>
-                        <div class="gallery-item"></div>
-                    </div>
-                </div>
             </div>
         </section>
     </main>
@@ -84,7 +125,7 @@
             <div class="footer-col">
                 <h4>SOCIALS</h4>
                 <a href="https://www.instagram.com/iedc__vjcet" target="_blank">Instagram</a>
-                <a href="https://discord.gg/hWqNcGG5" target="_blank">Discord</a>
+                <a href="https://discord.gg/Aqc9rXQwdN" target="_blank">Discord</a>
                 <a href="https://chat.whatsapp.com/JZLwAem7IT2Iys1chXOYlR" target="_blank">WhatsApp</a>
             </div>
             <div class="footer-col">
@@ -101,15 +142,7 @@
         </p>
     </footer>
 
-    <!-- Lightbox -->
-    <div class="lightbox" id="lightbox">
-        <div class="lightbox-close" id="lightboxClose">CLOSE</div>
-        <img class="lightbox-img" id="lightboxImg" src="" alt="Gallery Image">
-        <div class="lightbox-nav">
-            <div class="lightbox-prev" id="lightboxPrev">PREV</div>
-            <div class="lightbox-next" id="lightboxNext">NEXT</div>
-        </div>
-    </div>
+
 
     <!-- Lusion JS: Cursor & Scroll Animation -->
     <script>
@@ -167,76 +200,6 @@
                 menuOverlay.classList.remove('active');
             });
         });
-
-        // Lightbox Logic
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightboxImg');
-        const lightboxClose = document.getElementById('lightboxClose');
-        const lightboxPrev = document.getElementById('lightboxPrev');
-        const lightboxNext = document.getElementById('lightboxNext');
-        
-        const galleryImages = document.querySelectorAll('.gallery-item img');
-        let currentImageIndex = 0;
-
-        if (galleryImages.length > 0) {
-            galleryImages.forEach((img, index) => {
-                img.style.cursor = 'none'; // Ensure custom cursor logic applies
-                img.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
-                img.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
-                
-                img.addEventListener('click', () => {
-                    currentImageIndex = index;
-                    updateLightboxImage();
-                    lightbox.classList.add('active');
-                });
-            });
-
-            const lightboxElements = [lightboxClose, lightboxPrev, lightboxNext];
-            lightboxElements.forEach(el => {
-                el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
-                el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
-            });
-
-            lightboxClose.addEventListener('click', () => {
-                lightbox.classList.remove('active');
-            });
-
-            lightboxPrev.addEventListener('click', (e) => {
-                e.stopPropagation();
-                currentImageIndex = (currentImageIndex > 0) ? currentImageIndex - 1 : galleryImages.length - 1;
-                updateLightboxImage();
-            });
-
-            lightboxNext.addEventListener('click', (e) => {
-                e.stopPropagation();
-                currentImageIndex = (currentImageIndex < galleryImages.length - 1) ? currentImageIndex + 1 : 0;
-                updateLightboxImage();
-            });
-
-            // Close when clicking outside image
-            lightbox.addEventListener('click', (e) => {
-                if(e.target === lightbox) lightbox.classList.remove('active');
-            });
-
-            // Keyboard Navigation
-            document.addEventListener('keydown', (e) => {
-                if (!lightbox.classList.contains('active')) return;
-                
-                if (e.key === 'ArrowLeft') {
-                    currentImageIndex = (currentImageIndex > 0) ? currentImageIndex - 1 : galleryImages.length - 1;
-                    updateLightboxImage();
-                } else if (e.key === 'ArrowRight') {
-                    currentImageIndex = (currentImageIndex < galleryImages.length - 1) ? currentImageIndex + 1 : 0;
-                    updateLightboxImage();
-                } else if (e.key === 'Escape') {
-                    lightbox.classList.remove('active');
-                }
-            });
-
-            function updateLightboxImage() {
-                lightboxImg.src = galleryImages[currentImageIndex].src;
-            }
-        }
     </script>
 
 </body>

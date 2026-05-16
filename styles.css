@@ -21,7 +21,21 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    cursor: none; /* Custom cursor */
+}
+
+/* Custom Cursor: Only for devices with a pointer */
+@media (hover: hover) {
+    * {
+        cursor: none;
+    }
+}
+@media (hover: none) {
+    * {
+        cursor: auto !important;
+    }
+    .cursor {
+        display: none !important;
+    }
 }
 
 html {
@@ -86,6 +100,7 @@ a {
     z-index: 1000;
     mix-blend-mode: difference;
     color: #FFF;
+    transition: padding var(--transition-snappy), background var(--transition-snappy);
 }
 
 .logo-lusion {
@@ -135,15 +150,34 @@ a {
     -webkit-text-stroke: 2px var(--text-primary);
 }
 
-.hero-desc {
-    margin-top: 4rem;
-    max-width: 500px;
-    font-size: 1.2rem;
-    line-height: 1.5;
-    font-weight: 400;
-    color: var(--text-secondary);
+.hero-subtext {
+    font-size: clamp(0.75rem, 2vw, 1rem);
+    font-weight: 600;
+    margin-left: 15%;
+    margin-top: 1rem;
+    letter-spacing: 0.2em;
     opacity: 0;
-    animation: slideUpFade 1s var(--transition-smooth) 0.3s forwards;
+    animation: slideUpFade 1s var(--transition-smooth) 0.2s forwards;
+    text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+    .hero-subtext {
+        margin-left: 0;
+        margin-top: 2rem;
+        text-align: center;
+    }
+    .massive-text.outline {
+        margin-left: 0 !important;
+    }
+}
+
+.text-block-lusion {
+    display: block;
+}
+
+.massive-text.outline {
+    margin-left: 10%;
 }
 
 @keyframes slideUpFade {
@@ -154,6 +188,25 @@ a {
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+.hero-lusion.subpage {
+    height: 60vh;
+}
+
+.section-bg-white.overlap-top {
+    margin-top: -10vh;
+    position: relative;
+    z-index: 2;
+}
+
+@media (max-width: 768px) {
+    .hero-lusion.subpage {
+        height: 50vh;
+    }
+    .section-bg-white.overlap-top {
+        margin-top: -5vh;
     }
 }
 
@@ -317,12 +370,200 @@ a {
     opacity: 0.5;
 }
 
-/* Responsive */
+/* Responsive & Mobile Optimization */
 @media (max-width: 1024px) {
     .nav-minimal { padding: 2rem; }
     .hero-lusion { padding: 0 2rem; }
     .section-bg-white { padding: 4rem 2rem; margin: 1rem; }
     .footer-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --padding-mobile: 1.5rem;
+    }
+
+    html {
+        font-size: 14px;
+    }
+
+    body {
+        padding-top: 5rem; /* Space for fixed header */
+        padding-bottom: 0; 
+    }
+
+    /* Lock Header */
+    .nav-minimal {
+        padding: 1rem var(--padding-mobile);
+        background: rgba(240, 240, 240, 0.95);
+        backdrop-filter: blur(10px);
+        mix-blend-mode: normal;
+        color: var(--text-primary);
+        height: 5rem;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .logo-lusion {
+        font-size: 1.2rem;
+    }
+
+    .nav-minimal div[style*="display: flex"] {
+        gap: 0.5rem !important;
+    }
+
+    .menu-pill {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.8rem;
+    }
+
+    /* Subpage Back Button Override */
+    .nav-minimal .menu-pill[style*="border: 1px solid #FFF"] {
+        border-color: var(--text-primary) !important;
+        color: var(--text-primary) !important;
+    }
+
+    /* Normal Footer at end of page */
+    .footer-lusion {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        width: 100%;
+        padding: 6rem var(--padding-mobile) 4rem;
+        margin-top: 5rem;
+        border-radius: 40px 40px 0 0;
+        z-index: 10;
+        background: var(--text-primary);
+        display: block;
+        height: auto;
+    }
+
+    .footer-massive {
+        display: block !important;
+        font-size: 5rem;
+        line-height: 0.9;
+        margin-bottom: 4rem;
+    }
+
+    .footer-grid {
+        display: grid !important;
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        padding-top: 3rem;
+    }
+
+    .footer-col h4 {
+        margin-bottom: 1.5rem;
+    }
+
+    .footer-col a {
+        font-size: 1.2rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .footer-lusion > p {
+        display: block !important;
+        margin-top: 4rem;
+        font-size: 0.8rem;
+    }
+
+    /* Remove the bar-only copyright */
+    .footer-lusion::after {
+        display: none;
+    }
+
+    /* Hero Section */
+    .hero-lusion {
+        padding: 0 var(--padding-mobile);
+        height: 80vh;
+    }
+
+    .massive-text {
+        font-size: clamp(3.5rem, 15vw, 6rem);
+    }
+
+    /* Sections */
+    .section-lusion {
+        padding: 5rem var(--padding-mobile);
+    }
+
+    .section-bg-white {
+        padding: 5rem var(--padding-mobile);
+        margin: 2rem 0;
+        border-radius: 30px;
+    }
+
+    .section-title-large {
+        font-size: 3rem;
+        margin-bottom: 3rem;
+        padding-bottom: 1rem;
+    }
+
+    .grid-layout {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .lusion-card {
+        padding: 2.5rem;
+        aspect-ratio: auto;
+        min-height: 200px;
+        border-radius: 30px;
+    }
+
+    .card-title {
+        font-size: 2.2rem;
+    }
+
+    .team-grid-lusion {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .team-name {
+        font-size: 1.8rem;
+    }
+
+    /* Menu Overlay */
+    .menu-overlay {
+        clip-path: circle(0% at calc(100% - 4rem) 2.5rem);
+    }
+    .menu-overlay.active {
+        clip-path: circle(150% at calc(100% - 4rem) 2.5rem);
+    }
+    .menu-close {
+        top: 2rem;
+        right: 2rem;
+        padding: 1rem;
+    }
+    .menu-links {
+        gap: 1.5rem;
+    }
+    .menu-link {
+        font-size: 2.5rem;
+    }
+
+    /* Gallery Horizontal Scroll */
+    .gallery-grid {
+        display: flex !important;
+        overflow-x: auto !important;
+        scroll-snap-type: x mandatory;
+        gap: 1.5rem;
+        padding: 0 0 1rem 0;
+        scrollbar-width: none;
+    }
+    .gallery-grid::-webkit-scrollbar {
+        display: none;
+    }
+    .gallery-item {
+        flex: 0 0 85% !important;
+        scroll-snap-align: start;
+    }
+
+    /* Preloader */
+    .preloader-text {
+        font-size: 3.5rem;
+    }
 }
 
 /* Scroll Animations */

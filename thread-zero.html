@@ -84,7 +84,7 @@
             <div class="footer-col">
                 <h4>SOCIALS</h4>
                 <a href="https://www.instagram.com/iedc__vjcet" target="_blank">Instagram</a>
-                <a href="https://discord.gg/hWqNcGG5" target="_blank">Discord</a>
+                <a href="https://discord.gg/Aqc9rXQwdN" target="_blank">Discord</a>
                 <a href="https://chat.whatsapp.com/JZLwAem7IT2Iys1chXOYlR" target="_blank">WhatsApp</a>
             </div>
             <div class="footer-col">
@@ -217,6 +217,33 @@
             lightbox.addEventListener('click', (e) => {
                 if(e.target === lightbox) lightbox.classList.remove('active');
             });
+
+            
+            // Swipe Navigation
+            let touchStartX = 0;
+            let touchEndX = 0;
+            
+            lightbox.addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            lightbox.addEventListener('touchend', e => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, { passive: true });
+
+            function handleSwipe() {
+                const swipeThreshold = 50;
+                if (touchEndX < touchStartX - swipeThreshold) {
+                    // Swipe Left -> Next
+                    currentImageIndex = (currentImageIndex < galleryImages.length - 1) ? currentImageIndex + 1 : 0;
+                    updateLightboxImage();
+                } else if (touchEndX > touchStartX + swipeThreshold) {
+                    // Swipe Right -> Prev
+                    currentImageIndex = (currentImageIndex > 0) ? currentImageIndex - 1 : galleryImages.length - 1;
+                    updateLightboxImage();
+                }
+            }
 
             // Keyboard Navigation
             document.addEventListener('keydown', (e) => {
