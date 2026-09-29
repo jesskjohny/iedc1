@@ -1,0 +1,52 @@
+{
+  "name": "iedc-website",
+  "version": "1.0.0",
+  "main": "electron-main.js",
+  "scripts": {
+    "start": "http-server . -p 8080 -c-1",
+    "app:dev": "electron .",
+    "build:exe": "electron-builder --win",
+    "build:admin-www": "powershell -Command \"New-Item -ItemType Directory -Force -Path 'www'; Copy-Item 'admin.html' 'www/index.html' -Force; Copy-Item 'admin.html' 'www/admin.html' -Force; Copy-Item 'styles.css' 'www/styles.css' -Force; Copy-Item 'admin-manifest.json' 'www/manifest.json' -Force; Copy-Item 'sw-admin.js' 'www/sw.js' -Force; Copy-Item -Recurse -Force 'js' 'www/js'; Copy-Item -Recurse -Force 'assets' 'www/assets'\"",
+    "build:android": "npm run build:admin-www && npx cap sync android",
+    "build:apk": "npm run build:android && cmd /c \"set JAVA_HOME=C:\\Users\\jessk\\.gemini\\antigravity\\scratch\\iedc-website-lusion\\scratch\\jdk21&& set ANDROID_HOME=C:\\Users\\jessk\\.gemini\\antigravity\\scratch\\iedc-website-lusion\\scratch\\android-sdk&& set PATH=C:\\Users\\jessk\\.gemini\\antigravity\\scratch\\iedc-website-lusion\\scratch\\gradle\\gradle-8.14.3\\bin;C:\\Users\\jessk\\.gemini\\antigravity\\scratch\\iedc-website-lusion\\scratch\\gradle\\gradle-8.14.3\\bin;%PATH%&& cd android&& gradle.bat assembleDebug && copy app\\build\\outputs\\apk\\debug\\app-debug.apk ..\\IEDC-Admin-Studio.apk\"",
+    "open:android": "npx cap open android",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "build": {
+    "appId": "com.iedcvjcet.studio",
+    "productName": "IEDC Studio",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*",
+      "!android/**/*",
+      "!scratch/**/*",
+      "!IEDC-Admin-Studio.apk",
+      "!dist/**/*"
+    ],
+    "win": {
+      "target": ["nsis", "portable"]
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jesskjohny/iedc1.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jesskjohny/iedc1/issues"
+  },
+  "homepage": "https://github.com/jesskjohny/iedc1#readme",
+  "description": "",
+  "devDependencies": {
+    "@capacitor/android": "^8.5.0",
+    "@capacitor/cli": "^8.5.0",
+    "@capacitor/core": "^8.5.0",
+    "electron": "^42.3.0",
+    "electron-builder": "^26.15.3",
+    "http-server": "^14.1.1"
+  }
+}

@@ -1,0 +1,1 @@
+/* Draggable menu functionality removed */

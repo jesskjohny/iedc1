@@ -28,7 +28,7 @@
 
     <!-- Minimal Nav -->
     <nav class="nav-minimal">
-        <a href="index.html" class="logo-lusion">IEDC VJCET.</a>
+        <a href="index.html" class="logo-iedc"><span>IEDC VJCET.</span></a>
         <div style="display: flex; gap: 1rem;">
             <a href="index.html" class="menu-pill" style="background-color: transparent; border: 1px solid #FFF; color: #FFF;">Back</a>
             <a href="#menu" class="menu-pill" id="menuToggle">Menu</a>
@@ -50,24 +50,24 @@
         <section class="section-bg-white" id="mentors">
             <h2 class="section-title-large reveal-up">EX-EXE.COM</h2>
             
-            <div class="team-grid-lusion">
-                <div class="team-member reveal-up">
-                    <div class="team-img-wrapper"><img src="assets/team/CYRIAC PAUL PULLAN.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div>
+            <div class="team-grid-lusion" id="mentorsGrid">
+                <div class="team-member reveal-up" data-img="assets/team/cyriac-paul-pullan.png" data-name="CYRIAC PULLAN" data-role="STUDENT LEAD (2025)" data-dept="Viswajyothi College of Engineering and Technology" data-linkedin="https://linkedin.com/" data-instagram="https://www.instagram.com/iedc__vjcet">
+                    <div class="team-img-wrapper"><img src="assets/team/cyriac-paul-pullan.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div>
                     <h4 class="team-name">CYRIAC PULLAN</h4>
                     <p class="team-role">STUDENT LEAD (2025)</p>
                 </div>
-                <div class="team-member reveal-up">
-                    <div class="team-img-wrapper"><img src="assets/team/ANUSHA K.B.png?v=2" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div>
+                <div class="team-member reveal-up" data-img="assets/team/anusha-k-b.png" data-name="ANUSHA K.B" data-role="STUDENT LEAD (2025)" data-dept="Viswajyothi College of Engineering and Technology" data-linkedin="https://www.linkedin.com/in/anusha-kb-026027256" data-instagram="https://www.instagram.com/iedc__vjcet">
+                    <div class="team-img-wrapper"><img src="assets/team/anusha-k-b.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div>
                     <h4 class="team-name">ANUSHA K.B</h4>
                     <p class="team-role">STUDENT LEAD (2025)</p>
                 </div>
-                <div class="team-member reveal-up">
-                    <div class="team-img-wrapper"><img src="assets/team/ALFRED SANTHOSE.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div>
+                <div class="team-member reveal-up" data-img="assets/team/alfred-santhose.png" data-name="ALFRED SANTHOSE" data-role="QUALITY & OP LEAD (2025)" data-dept="Viswajyothi College of Engineering and Technology" data-linkedin="https://linkedin.com/" data-instagram="https://www.instagram.com/iedc__vjcet">
+                    <div class="team-img-wrapper"><img src="assets/team/alfred-santhose.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div>
                     <h4 class="team-name">ALFRED SANTHOSE</h4>
                     <p class="team-role">QUALITY & OP LEAD (2025)</p>
                 </div>
-                <div class="team-member reveal-up">
-                    <div class="team-img-wrapper"><img src="assets/team/ALEX.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div>
+                <div class="team-member reveal-up" data-img="assets/team/alex.png" data-name="ALEX" data-role="STUDENT LEAD (2024)" data-dept="Viswajyothi College of Engineering and Technology" data-linkedin="https://linkedin.com/" data-instagram="https://www.instagram.com/iedc__vjcet">
+                    <div class="team-img-wrapper"><img src="assets/team/alex.png" class="team-img" onerror="this.src='assets/team/placeholder.png'"></div>
                     <h4 class="team-name">ALEX</h4>
                     <p class="team-role">STUDENT LEAD (2024)</p>
                 </div>
@@ -108,8 +108,73 @@
         </p>
     </footer>
 
+    <!-- Member Profile Popup -->
+    <div class="member-popup-overlay" id="memberPopup">
+        <div class="member-popup">
+            <span class="member-popup-close" id="popupClose">✕</span>
+            <img class="member-popup-img" id="popupImg" src="" alt="">
+            <div class="member-popup-info">
+                <div class="member-popup-name" id="popupName"></div>
+                <div class="member-popup-role" id="popupRole"></div>
+                <div class="member-popup-dept" id="popupDept"></div>
+                <div class="team-social-btns" id="popupSocialBtns" style="margin-top:1.2rem;"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- Lusion JS: Cursor & Scroll Animation & Menu -->
     <script>
+        // SVG icons
+        const githubSVG = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222 0 1.606-.015 2.898-.015 3.293 0 .322.216.694.825.576C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>`;
+        const linkedinSVG = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>`;
+        const instagramSVG = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>`;
+
+        // Wire up popup for each mentor
+        document.querySelectorAll('#mentorsGrid .team-member').forEach(member => {
+            member.querySelector('.team-img-wrapper').addEventListener('click', () => {
+                document.getElementById('popupImg').src = member.dataset.img;
+                document.getElementById('popupImg').onerror = function(){ this.src='assets/team/placeholder.png'; };
+                document.getElementById('popupName').textContent = member.dataset.name;
+                document.getElementById('popupRole').textContent = member.dataset.role;
+                document.getElementById('popupDept').textContent = member.dataset.dept || '';
+
+                const btns = document.getElementById('popupSocialBtns');
+                btns.innerHTML = '';
+                if (member.dataset.github) {
+                    const a = document.createElement('a');
+                    a.href = member.dataset.github; a.target = '_blank'; a.rel = 'noopener';
+                    a.className = 'team-social-btn'; a.innerHTML = githubSVG;
+                    btns.appendChild(a);
+                }
+                if (member.dataset.linkedin) {
+                    const a = document.createElement('a');
+                    a.href = member.dataset.linkedin; a.target = '_blank'; a.rel = 'noopener';
+                    a.className = 'team-social-btn'; a.innerHTML = linkedinSVG;
+                    btns.appendChild(a);
+                }
+                if (member.dataset.instagram) {
+                    const a = document.createElement('a');
+                    a.href = member.dataset.instagram; a.target = '_blank'; a.rel = 'noopener';
+                    a.className = 'team-social-btn'; a.innerHTML = instagramSVG;
+                    btns.appendChild(a);
+                }
+
+                document.getElementById('memberPopup').classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        // Close popup
+        document.getElementById('popupClose').addEventListener('click', closePopup);
+        document.getElementById('memberPopup').addEventListener('click', function(e) {
+            if (e.target === this) closePopup();
+        });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closePopup(); });
+        function closePopup() {
+            document.getElementById('memberPopup').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
         // Custom Cursor
         const cursor = document.getElementById('cursor');
         

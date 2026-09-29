@@ -17,6 +17,8 @@
 }
 
 /* Base & Reset */
+.logo-img { display: none !important; }
+
 * {
     margin: 0;
     padding: 0;
@@ -103,9 +105,9 @@ a {
     transition: padding var(--transition-snappy), background var(--transition-snappy);
 }
 
-.logo-lusion {
-    font-size: 1.5rem;
-    font-weight: 800;
+.logo-lusion, .logo-iedc, .logo-iedc span, .logo-lusion span {
+    font-size: 1.6rem;
+    font-weight: 900 !important;
     letter-spacing: -0.02em;
 }
 
@@ -268,8 +270,11 @@ a {
 }
 
 .card-title {
-    font-size: 3rem;
+    font-size: clamp(2rem, 3.5vw, 3rem);
     font-weight: 800;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    line-height: 1.1;
 }
 
 .card-btn {
@@ -1051,4 +1056,34 @@ a {
 
 .member-popup-close:hover {
     background: var(--text-primary);
+}
+
+.team-social-btns {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+}
+
+.team-social-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #0A0A0A;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s, background 0.3s;
+    cursor: pointer;
+}
+
+.team-social-btn:hover {
+    transform: scale(1.12);
+    background: #FF3366;
+}
+
+.team-social-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
 }

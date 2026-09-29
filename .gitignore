@@ -1,0 +1,39 @@
+# Node dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Builds & Outputs
+dist/
+build/
+www/
+out/
+.output/
+
+# Binaries & Large Installers
+*.exe
+*.apk
+*.aab
+*.zip
+*.tar.gz
+*.dmg
+*.iso
+cloudflared.exe
+IEDC-Admin-Studio.apk
+IEDC-Studio-Setup.exe
+assets/*.exe
+assets/*.apk
+
+# Android / Mobile toolchains & build caches
+android/
+scratch/
+.gradle/
+*.iml
+.idea/
+
+# OS & Temp
+.DS_Store
+Thumbs.db
+*.log
+.FullName

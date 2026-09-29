@@ -1,0 +1,2037 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" type="image/png" href="assets/app_logo.png">
+    <link rel="apple-touch-icon" href="assets/app_logo.png">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IEDC VJCET | Content & Hosting Studio</title>
+    <link rel="manifest" href="admin-manifest.json">
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="assets/icon-192.png">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --admin-bg: #FAFAFA;
+            --admin-card-bg: #FFFFFF;
+            --admin-card-border: rgba(0, 0, 0, 0.08);
+            --admin-accent: #000000;
+            --admin-accent-hover: #262626;
+            --admin-text: #0A0A0A;
+            --admin-subtext: #666666;
+            --font-main: 'Inter', sans-serif;
+            --transition-snappy: 0.4s cubic-bezier(0.2, 1, 0.2, 1);
+        }
+
+        body {
+            background-color: var(--admin-bg);
+            color: var(--admin-text);
+            font-family: var(--font-main), sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ---------------------------------------------------------
+           PRELOADER LOADER WINDOW (Stark White & Black)
+           --------------------------------------------------------- */
+        .app-preloader {
+            position: fixed;
+            inset: 0;
+            background: #000000;
+            z-index: 999999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s cubic-bezier(0.77, 0, 0.175, 1), transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .app-preloader.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-100%);
+        }
+
+        .preloader-title {
+            font-size: clamp(2.5rem, 8vw, 6.5rem);
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            display: flex;
+            overflow: hidden;
+            line-height: 1;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            color: #ffffff;
+        }
+
+        .preloader-title span {
+            display: inline-block;
+            transform: translateY(100%);
+            animation: revealLetter 0.8s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+        }
+
+        .preloader-title span:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .preloader-title span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .preloader-title span:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .preloader-title span:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .preloader-title span:nth-child(5) {
+            animation-delay: 0.5s;
+            color: #555555;
+        }
+
+        @keyframes revealLetter {
+            0% {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .preloader-sub {
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 0.25em;
+            color: var(--admin-subtext);
+            text-transform: uppercase;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeInSub 0.8s ease 0.6s forwards;
+        }
+
+        @keyframes fadeInSub {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .preloader-progress-track {
+            width: 280px;
+            height: 3px;
+            background: rgba(0, 0, 0, 0.08);
+            border-radius: 100px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .preloader-progress-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background: #000000;
+            animation: loadAppProgress 1.6s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+            animation-delay: 0.2s;
+        }
+
+        @keyframes loadAppProgress {
+            0% {
+                width: 0%;
+            }
+
+            100% {
+                width: 100%;
+            }
+        }
+
+        /* Ambient Subtle Background Grid for White Theme */
+        .admin-bg-glow {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+            background-image: radial-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 0);
+            background-size: 32px 32px;
+        }
+
+        /* ---------------------------------------------------------
+           LOGIN SCREEN OVERLAY (White & Black Design System)
+           --------------------------------------------------------- */
+        #authOverlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(250, 250, 250, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            transition: opacity 0.5s ease;
+        }
+
+        .auth-box {
+            background: #FFFFFF;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 3rem 2.5rem;
+            border-radius: 32px;
+            width: 100%;
+            max-width: 440px;
+            text-align: center;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.08), 0 0 30px rgba(0, 0, 0, 0.04);
+            position: relative;
+        }
+
+        .auth-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.35rem 0.9rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            background: rgba(0, 0, 0, 0.05);
+            color: #000000;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.2rem;
+        }
+
+        .auth-title {
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            margin-bottom: 0.4rem;
+            text-transform: uppercase;
+            color: #000000;
+        }
+
+        .auth-sub {
+            color: var(--admin-subtext);
+            font-size: 0.88rem;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .input-group-relative {
+            position: relative;
+            margin-bottom: 1.2rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1.1rem 1.25rem;
+            padding-right: 3rem;
+            background: #F5F5F7;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 18px;
+            color: #000000;
+            font-family: var(--font-main);
+            font-size: 0.95rem;
+            box-sizing: border-box;
+            transition: all var(--transition-snappy);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #000000;
+            background: #FFFFFF;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .toggle-pass-btn {
+            position: absolute;
+            right: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: var(--admin-subtext);
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .toggle-pass-btn:hover {
+            color: #000;
+        }
+
+        .auth-options {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.8rem;
+            font-size: 0.82rem;
+            color: var(--admin-subtext);
+        }
+
+        .remember-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .remember-label input[type="checkbox"] {
+            accent-color: #000000;
+            cursor: pointer;
+        }
+
+        .passcode-hint-pill {
+            background: rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            padding: 0.3rem 0.7rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            color: var(--admin-subtext);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .passcode-hint-pill:hover {
+            color: #000;
+            border-color: #000;
+            background: rgba(0, 0, 0, 0.08);
+        }
+
+        .auth-error-msg {
+            color: #E11D48;
+            font-size: 0.82rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        /* Buttons (Black & White Theme) */
+        .btn-admin {
+            padding: 0.95rem 1.8rem;
+            background: #000000;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 100px;
+            font-weight: 800;
+            font-size: 0.88rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all var(--transition-snappy);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+
+        .btn-admin:hover {
+            background: #262626;
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+        }
+
+        .btn-secondary {
+            background: #F0F0F0;
+            color: #000000;
+            border: 1px solid rgba(0, 0, 0, 0.12);
+        }
+
+        .btn-secondary:hover {
+            background: #E5E5E5;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .btn-danger {
+            background: #E11D48;
+            color: #FFF;
+        }
+
+        .btn-danger:hover {
+            background: #BE123C;
+            box-shadow: 0 8px 20px rgba(225, 29, 72, 0.3);
+        }
+
+        .btn-success {
+            background: #000000;
+            color: #FFF;
+            border: 1px solid #000000;
+        }
+
+        .btn-success:hover {
+            background: #262626;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-sm {
+            padding: 0.55rem 1.1rem;
+            font-size: 0.8rem;
+            border-radius: 100px;
+        }
+
+        /* Authentication State */
+        body.admin-authenticated nav.nav-studio-top,
+        body.admin-authenticated .studio-app-container {
+            display: flex !important;
+        }
+
+        body.admin-authenticated #authOverlay {
+            display: none !important;
+        }
+
+        /* Studio Top Navigation Bar (White & Black) */
+        nav.nav-studio-top {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            z-index: 1000;
+            padding: 0 1.5rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .studio-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-weight: 900;
+            font-size: 1.1rem;
+            letter-spacing: -0.02em;
+            color: #000000;
+        }
+
+        .hosting-status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            background: #F0F0F0;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .hosting-status-pill.offline {
+            color: #E11D48;
+            border-color: rgba(225, 29, 72, 0.3);
+            background: rgba(225, 29, 72, 0.08);
+        }
+
+        .hosting-status-pill.starting {
+            color: #D97706;
+            border-color: rgba(217, 119, 6, 0.3);
+            background: rgba(217, 119, 6, 0.08);
+        }
+
+        .hosting-status-pill.online {
+            color: #059669;
+            border-color: rgba(5, 150, 105, 0.3);
+            background: rgba(5, 150, 105, 0.1);
+            box-shadow: 0 0 15px rgba(5, 150, 105, 0.15);
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+            display: inline-block;
+        }
+
+        .hosting-status-pill.online .pulse-dot {
+            animation: pulseGreen 1.8s infinite;
+        }
+
+        @keyframes pulseGreen {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.4;
+                transform: scale(1.3);
+            }
+        }
+
+        .studio-mode-tabs {
+            display: flex;
+            gap: 0.4rem;
+            background: #F0F0F0;
+            padding: 0.3rem;
+            border-radius: 100px;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .mode-btn {
+            padding: 0.5rem 1.1rem;
+            border: none;
+            background: transparent;
+            color: var(--admin-subtext);
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: all var(--transition-snappy);
+            white-space: nowrap;
+        }
+
+        .mode-btn.active {
+            background: #000000;
+            color: #FFFFFF;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Studio Split Workspace */
+        .studio-app-container {
+            display: none;
+            margin-top: 70px;
+            height: calc(100vh - 70px);
+            width: 100vw;
+            overflow: hidden;
+        }
+
+        .studio-pane-tools {
+            width: 48%;
+            min-width: 420px;
+            height: 100%;
+            background: #FAFAFA;
+            border-right: 1px solid rgba(0, 0, 0, 0.08);
+            overflow-y: auto;
+            padding: 2rem;
+            box-sizing: border-box;
+            transition: width 0.3s ease;
+        }
+
+        .studio-pane-preview {
+            flex: 1;
+            height: 100%;
+            background: #E5E5E5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        .preview-toolbar {
+            width: 100%;
+            height: 48px;
+            background: #FFFFFF;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1.2rem;
+            box-sizing: border-box;
+        }
+
+        .preview-iframe-wrapper {
+            flex: 1;
+            width: 100%;
+            height: calc(100% - 48px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            box-sizing: border-box;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .preview-iframe-wrapper.mobile-mode {
+            width: 420px;
+            height: 820px;
+            margin: auto;
+            border-radius: 36px;
+            border: 12px solid #000000;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        #previewIframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #FFFFFF;
+            border-radius: 12px;
+        }
+
+        /* Cards & Tool Sections (White & Black) */
+        .admin-card {
+            background: #FFFFFF;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 28px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .card-title-text {
+            font-size: 1.4rem;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+            margin: 0 0 0.3rem 0;
+            color: #000000;
+        }
+
+        .item-sub {
+            color: var(--admin-subtext);
+            font-size: 0.85rem;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        .item-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .item-card {
+            background: #F9F9FB;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            border-radius: 20px;
+            padding: 1.2rem;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            transition: all var(--transition-snappy);
+        }
+
+        .item-card:hover {
+            transform: translateY(-4px);
+            background: #FFFFFF;
+            border-color: rgba(0, 0, 0, 0.15);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        .item-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 14px;
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .item-title {
+            font-weight: 800;
+            font-size: 1.05rem;
+            letter-spacing: -0.01em;
+            text-transform: uppercase;
+            margin: 0 0 0.3rem 0;
+            color: #000000;
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: auto;
+            padding-top: 0.8rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        /* Color Picker & Theme Slider Row */
+        .theme-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .theme-label {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #000000;
+        }
+
+        .theme-sub {
+            font-size: 0.78rem;
+            color: var(--admin-subtext);
+            margin-top: 0.2rem;
+        }
+
+        input[type="color"] {
+            -webkit-appearance: none;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            cursor: pointer;
+            background: transparent;
+        }
+
+        input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+
+        input[type="color"]::-webkit-color-swatch {
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            border-radius: 12px;
+        }
+
+        /* Code Editor Textarea (High-contrast Dark Slate Editor) */
+        .code-textarea {
+            width: 100%;
+            height: calc(100vh - 280px);
+            background: #0A0A0E;
+            color: #38BDF8;
+            font-family: 'Consolas', 'Fira Code', 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            padding: 1.2rem;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            border-radius: 16px;
+            box-sizing: border-box;
+            resize: none;
+            outline: none;
+        }
+
+        .code-textarea:focus {
+            border-color: #000000;
+        }
+
+        /* Modal Form (White Theme) */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #FFFFFF;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 32px;
+            width: 100%;
+            max-width: 580px;
+            max-height: 88vh;
+            overflow-y: auto;
+            padding: 2.5rem;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.15);
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: #000000;
+            margin-bottom: 0.4rem;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 2.5rem;
+            right: 2.5rem;
+            background: #000000;
+            color: #FFFFFF;
+            padding: 1rem 2rem;
+            border-radius: 100px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            transform: translateY(120px);
+            opacity: 0;
+            transition: all var(--transition-snappy);
+            z-index: 99999;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* =========================================================
+           MOBILE & TABLET RESPONSIVE ENGINE (Capacitor / Mobile Web)
+           ========================================================= */
+        /* =========================================================
+           MOBILE & TABLET RESPONSIVE ENGINE (Capacitor / Mobile Web)
+           ========================================================= */
+        @media (max-width: 992px) {
+            .nav-studio-top {
+                position: relative !important;
+            }
+            .studio-app-container {
+                flex-direction: column !important;
+                margin-top: 0 !important;
+                height: auto !important;
+                overflow: visible !important;
+            }
+            .studio-pane-tools {
+                min-width: 0 !important;
+                width: 100% !important;
+                height: auto !important;
+                padding: 1rem !important;
+                overflow-y: visible !important;
+                border-right: none !important;
+            }
+            .studio-pane-preview {
+                display: none !important; /* Hide preview pane on mobile phones so editing tools take 100% full screen */
+            }
+        }
+
+        @media (max-width: 768px) {
+            /* Touch & Mobile Viewport Reset */
+            body {
+                padding-top: env(safe-area-inset-top, 0px);
+                padding-bottom: env(safe-area-inset-bottom, 15px);
+            }
+
+            /* Studio Top Navbar on Mobile */
+            .nav-studio-top {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 0.8rem 1rem;
+                gap: 0.75rem;
+                height: auto;
+                position: relative;
+            }
+
+            .studio-logo {
+                justify-content: space-between;
+                width: 100%;
+                font-size: 1.05rem;
+            }
+
+            .studio-mode-tabs {
+                display: flex;
+                width: 100%;
+                overflow-x: auto;
+                white-space: nowrap;
+                padding-bottom: 0.3rem;
+                gap: 0.4rem;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+
+            .studio-mode-tabs::-webkit-scrollbar {
+                display: none;
+            }
+
+            .mode-btn {
+                flex: 0 0 auto;
+                padding: 0.5rem 0.9rem;
+                font-size: 0.8rem;
+            }
+
+            .nav-studio-top > div:last-child {
+                flex-wrap: wrap;
+                width: 100%;
+                justify-content: space-between;
+                gap: 0.5rem;
+            }
+
+            .nav-studio-top .btn-admin {
+                flex: 1 1 auto;
+                text-align: center;
+                justify-content: center;
+                padding: 0.6rem 0.8rem;
+                font-size: 0.78rem;
+            }
+
+            #hostingUrlContainer {
+                width: 100%;
+                justify-content: space-between;
+                box-sizing: border-box;
+            }
+
+            #hostingUrlContainer input {
+                width: calc(100% - 70px) !important;
+            }
+
+            /* Tab Navigation Bars */
+            .tab-bar {
+                display: flex !important;
+                overflow-x: auto !important;
+                white-space: nowrap !important;
+                -webkit-overflow-scrolling: touch;
+                padding-bottom: 0.4rem;
+                margin-bottom: 1rem !important;
+                gap: 0.4rem !important;
+                scrollbar-width: none;
+            }
+
+            .tab-bar::-webkit-scrollbar {
+                display: none;
+            }
+
+            .tab-btn {
+                flex: 0 0 auto;
+                padding: 0.55rem 1rem !important;
+                font-size: 0.82rem !important;
+            }
+
+            /* Grids to Single Column */
+            .stats-grid,
+            .form-grid,
+            .grid-2,
+            .grid-3,
+            .gallery-grid,
+            .data-grid {
+                grid-template-columns: 1fr !important;
+                gap: 0.8rem !important;
+            }
+
+            /* Card Items on Mobile */
+            .data-card, .admin-card, .item-card {
+                padding: 1rem !important;
+                border-radius: 16px !important;
+            }
+
+            /* Form Elements & Touch Enhancements */
+            input[type="text"],
+            input[type="password"],
+            input[type="email"],
+            input[type="number"],
+            input[type="url"],
+            select,
+            textarea {
+                font-size: 16px !important; /* Prevents auto-zoom on iOS/Android */
+                padding: 0.8rem 1rem !important;
+                min-height: 48px;
+                box-sizing: border-box;
+            }
+
+            .btn-admin, button {
+                min-height: 44px;
+            }
+
+            /* Auth Box on Mobile */
+            .auth-box {
+                width: 92% !important;
+                padding: 1.8rem 1.2rem !important;
+                border-radius: 24px !important;
+            }
+
+            .auth-title {
+                font-size: 1.8rem !important;
+            }
+
+            /* Modal Enhancements on Mobile */
+            .modal {
+                padding: 0.8rem !important;
+            }
+
+            .modal-content {
+                width: 95vw !important;
+                max-width: 95vw !important;
+                padding: 1.2rem !important;
+                border-radius: 24px !important;
+                max-height: 90vh !important;
+                box-sizing: border-box;
+            }
+
+            /* Code Editor Textarea */
+            .code-textarea {
+                height: 60vh !important;
+                font-size: 0.82rem !important;
+                padding: 0.8rem !important;
+            }
+
+            /* Toast Notification Position */
+            .toast {
+                bottom: 1.2rem;
+                right: 5%;
+                left: 5%;
+                text-align: center;
+                width: 90%;
+                box-sizing: border-box;
+                padding: 0.85rem 1.2rem;
+                font-size: 0.8rem;
+            }
+
+            /* Item Card Actions */
+            .item-actions {
+                flex-direction: column;
+                gap: 0.4rem;
+            }
+
+            .item-actions button,
+            .item-actions a {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+
+    <!-- Stark White & Black App Preloader Loading Window -->
+    <div class="app-preloader" id="appPreloader">
+        <div class="preloader-title">
+            <span>I</span><span>E</span><span>D</span><span>C</span><span>.STUDIO</span>
+        </div>
+        <div class="preloader-sub">INITIALIZING SYSTEM CORE & DISK STORAGE</div>
+        <div class="preloader-progress-track">
+            <div class="preloader-progress-bar"></div>
+        </div>
+    </div>
+
+    <!-- Ambient Subtle Background Grid -->
+    <div class="admin-bg-glow"></div>
+
+    <!-- Top Studio Navigation Bar (White & Black) -->
+    <nav class="nav-studio-top">
+        <div class="studio-logo" style="display: flex; align-items: center; gap: 0.6rem;">
+            <div><span style="color: #000000;">IEDC</span> STUDIO</div>
+            <div id="hostingStatusPill" class="hosting-status-pill offline">
+                <span class="pulse-dot"></span>
+                <span id="hostingStatusText">OFFLINE</span>
+            </div>
+        </div>
+
+        <!-- Tool Mode Switcher -->
+        <div class="studio-mode-tabs">
+            <button class="mode-btn active" onclick="switchStudioMode('data')">📊 Data Editor</button>
+            <button class="mode-btn" onclick="switchStudioMode('theme')">🎨 Theme & Layout</button>
+            <button class="mode-btn" onclick="switchStudioMode('inspector')">👁️ Visual Inspector</button>
+            <button class="mode-btn" onclick="switchStudioMode('code')">💻 Code Studio</button>
+        </div>
+
+        <!-- Hosting Action Buttons & URL -->
+        <div style="display: flex; align-items: center; gap: 0.8rem;">
+            <div id="hostingUrlContainer"
+                style="display: none; align-items: center; gap: 0.4rem; background: #F0F0F0; padding: 0.35rem 0.8rem; border-radius: 100px; border: 1px solid rgba(0,0,0,0.1);">
+                <input type="text" id="liveUrlInput" readonly
+                    style="background: transparent; border: none; color: #000000; font-size: 0.8rem; font-weight: 800; width: 180px;"
+                    value="">
+                <button onclick="copyLiveUrl()"
+                    style="background: transparent; border: none; color: #000; cursor: pointer; font-size: 0.8rem; font-weight: 800;">📋
+                    Copy</button>
+            </div>
+
+            <button id="btnToggleHosting" class="btn-admin btn-success btn-sm" onclick="toggleHosting()">
+                🚀 HOST WEBSITE LIVE
+            </button>
+            <button class="btn-admin btn-secondary btn-sm" onclick="openAdminApkModal()">📱/💻 DOWNLOAD STUDIO APPS</button>
+            <button class="btn-admin btn-secondary btn-sm" onclick="logoutAdmin()">Logout</button>
+        </div>
+    </nav>
+
+    <!-- Password Auth Login Overlay (White & Black Theme) -->
+    <div id="authOverlay">
+        <div class="auth-box">
+            <div class="auth-badge">IEDC VJCET • PRO STUDIO</div>
+            <div class="auth-title">STUDIO PORTAL</div>
+            <div class="auth-sub">Enter Passcode to Access Central Control</div>
+
+            <div class="input-group-relative">
+                <input type="password" id="adminPasscode" class="form-control" placeholder="Enter Passcode..."
+                    onkeydown="if(event.key==='Enter') loginAdmin()">
+                <button type="button" class="toggle-pass-btn" onclick="togglePasscodeVisibility()"
+                    title="Toggle visibility">👁️</button>
+            </div>
+
+            <div class="auth-error-msg" id="authErrorMsg">❌ Invalid Passcode! Please try again.</div>
+
+            <div class="auth-options">
+                <label class="remember-label">
+                    <input type="checkbox" id="rememberSessionCheck" checked>
+                    <span>Remember Session</span>
+                </label>
+                <div class="passcode-hint-pill" onclick="autoFillDefaultPasscode()">Key: iedcvjcet</div>
+            </div>
+
+            <button class="btn-admin" style="width: 100%;" onclick="loginAdmin()">🔓 ACCESS CONTROL CENTER</button>
+        </div>
+    </div>
+
+    <!-- Main Studio Split Workspace -->
+    <div class="studio-app-container" id="studioAppContainer">
+
+        <!-- LEFT PANE: STUDIO TOOLS -->
+        <div class="studio-pane-tools" id="studioToolsPane">
+
+            <!-- 1. DATA EDITOR MODE -->
+            <div id="mode-data" class="studio-mode-content">
+                <div class="tab-bar"
+                    style="display: flex; gap: 0.5rem; overflow-x: auto; margin-bottom: 1.5rem; scrollbar-width: none;">
+                    <button class="tab-btn active" onclick="switchDataSubTab('events')">🎟️ Live Events</button>
+                    <button class="tab-btn" onclick="switchDataSubTab('flagships')">🚀 Flagships</button>
+                    <button class="tab-btn" onclick="switchDataSubTab('announcements')">📢 Bulletins</button>
+                    <button class="tab-btn" onclick="switchDataSubTab('execom')">👥 EXE.COM</button>
+                    <button class="tab-btn" onclick="switchDataSubTab('seeds')">🌱 Seeds</button>
+                    <button class="tab-btn" onclick="switchDataSubTab('mentors')">🎓 Mentors</button>
+                    <button class="tab-btn" onclick="switchDataSubTab('settings')">⚙️ Backups</button>
+                </div>
+
+                <!-- Sub-tabs for Data Editor -->
+                <div id="subtab-events" class="data-subtab">
+                    <div class="admin-card">
+                        <div class="card-header">
+                            <div>
+                                <h2 class="card-title-text">Live Events</h2>
+                                <p class="item-sub">Manage active workshops & hackathons</p>
+                            </div>
+                            <button class="btn-admin btn-sm" onclick="openModal('events')">+ Add Event</button>
+                        </div>
+                        <div id="grid-events" class="item-grid"></div>
+                    </div>
+                </div>
+
+                <div id="subtab-flagships" class="data-subtab" style="display: none;">
+                    <div class="admin-card">
+                        <div class="card-header">
+                            <div>
+                                <h2 class="card-title-text">Flagship Initiatives</h2>
+                                <p class="item-sub">Manage annual flagship posters</p>
+                            </div>
+                            <button class="btn-admin btn-sm" onclick="openModal('flagships')">+ Add Flagship</button>
+                        </div>
+                        <div id="grid-flagships" class="item-grid"></div>
+                    </div>
+                </div>
+
+                <div id="subtab-announcements" class="data-subtab" style="display: none;">
+                    <div class="admin-card">
+                        <div class="card-header">
+                            <div>
+                                <h2 class="card-title-text">Flagship Bulletins</h2>
+                                <p class="item-sub">Manage main page bulletins & news</p>
+                            </div>
+                            <button class="btn-admin btn-sm" onclick="openModal('announcements')">+ Add
+                                Bulletin</button>
+                        </div>
+                        <div id="grid-announcements" class="item-grid"></div>
+                    </div>
+                </div>
+
+                <div id="subtab-execom" class="data-subtab" style="display: none;">
+                    <div class="admin-card">
+                        <div class="card-header">
+                            <div>
+                                <h2 class="card-title-text">EXE.COM Committee</h2>
+                                <p class="item-sub">Manage student leads</p>
+                            </div>
+                            <button class="btn-admin btn-sm" onclick="openModal('execom')">+ Add Lead</button>
+                        </div>
+                        <div id="grid-execom" class="item-grid"></div>
+                    </div>
+                </div>
+
+                <div id="subtab-seeds" class="data-subtab" style="display: none;">
+                    <div class="admin-card">
+                        <div class="card-header">
+                            <div>
+                                <h2 class="card-title-text">Seeds Committee</h2>
+                                <p class="item-sub">Manage seed members</p>
+                            </div>
+                            <button class="btn-admin btn-sm" onclick="openModal('seeds')">+ Add Seed Member</button>
+                        </div>
+                        <div id="grid-seeds" class="item-grid"></div>
+                    </div>
+                </div>
+
+                <div id="subtab-mentors" class="data-subtab" style="display: none;">
+                    <div class="admin-card">
+                        <div class="card-header">
+                            <div>
+                                <h2 class="card-title-text">Mentors Grid</h2>
+                                <p class="item-sub">Manage mentor profiles on mentors.html</p>
+                            </div>
+                            <button class="btn-admin btn-sm" onclick="openModal('mentors')">+ Add Mentor</button>
+                        </div>
+                        <div id="grid-mentors" class="item-grid"></div>
+                    </div>
+                </div>
+
+                <div id="subtab-settings" class="data-subtab" style="display: none;">
+                    <div class="admin-card">
+                        <h2 class="card-title-text" style="margin-bottom: 0.5rem;">Disk Persistence & Backups</h2>
+                        <p class="item-sub" style="margin-bottom: 1.5rem;">Export JSON backup or restore from snapshot
+                            files.</p>
+                        <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
+                            <button class="btn-admin btn-sm" onclick="exportData()">📥 Export JSON</button>
+                            <button class="btn-admin btn-secondary btn-sm"
+                                onclick="document.getElementById('importFile').click()">📤 Import JSON</button>
+                            <input type="file" id="importFile" accept=".json" style="display:none"
+                                onchange="importData(event)">
+                            <button class="btn-admin btn-danger btn-sm" onclick="resetDefaults()">⚠️ Reset
+                                Defaults</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. LAYOUT & THEME ENGINE MODE -->
+            <div id="mode-theme" class="studio-mode-content" style="display: none;">
+                <div class="admin-card">
+                    <h2 class="card-title-text">Global Theme Customizer</h2>
+                    <p class="item-sub" style="margin-bottom: 1.5rem;">Tweak brand color tokens and apply directly to
+                        styles.css</p>
+
+                    <div class="theme-row">
+                        <div>
+                            <div class="theme-label">Primary Accent Color</div>
+                            <div class="theme-sub">Website accent & buttons</div>
+                        </div>
+                        <input type="color" id="themeAccent" value="#000000" onchange="previewThemeChange()">
+                    </div>
+
+                    <div class="theme-row">
+                        <div>
+                            <div class="theme-label">Neon Cyan Accent</div>
+                            <div class="theme-sub">Highlights & links</div>
+                        </div>
+                        <input type="color" id="themeCyan" value="#00F2FE" onchange="previewThemeChange()">
+                    </div>
+
+                    <div class="theme-row">
+                        <div>
+                            <div class="theme-label">Neon Purple Accent</div>
+                            <div class="theme-sub">Secondary glow & borders</div>
+                        </div>
+                        <input type="color" id="themePurple" value="#4F46E5" onchange="previewThemeChange()">
+                    </div>
+
+                    <div class="theme-row">
+                        <div>
+                            <div class="theme-label">Background Tone</div>
+                            <div class="theme-sub">Website primary background</div>
+                        </div>
+                        <input type="color" id="themeBg" value="#FAFAFA" onchange="previewThemeChange()">
+                    </div>
+
+                    <div style="margin-top: 1.5rem;">
+                        <button class="btn-admin" style="width: 100%;" onclick="saveThemeToDisk()">💾 Save Theme to
+                            Stylesheet</button>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <h2 class="card-title-text">Page Section Layout Control</h2>
+                    <p class="item-sub" style="margin-bottom: 1.2rem;">Toggle visibility of main page sections</p>
+
+                    <div class="theme-row">
+                        <div class="theme-label">Hero Banner & Countdown</div>
+                        <input type="checkbox" id="toggleHero" checked
+                            onchange="toggleSectionInPreview('hero', this.checked)">
+                    </div>
+                    <div class="theme-row">
+                        <div class="theme-label">Live Events Section</div>
+                        <input type="checkbox" id="toggleEvents" checked
+                            onchange="toggleSectionInPreview('events', this.checked)">
+                    </div>
+                    <div class="theme-row">
+                        <div class="theme-label">Flagship Initiatives</div>
+                        <input type="checkbox" id="toggleFlagships" checked
+                            onchange="toggleSectionInPreview('main-events', this.checked)">
+                    </div>
+                    <div class="theme-row">
+                        <div class="theme-label">Executive Committee (EXE.COM)</div>
+                        <input type="checkbox" id="toggleTeam" checked
+                            onchange="toggleSectionInPreview('team', this.checked)">
+                    </div>
+                    <div class="theme-row">
+                        <div class="theme-label">Seeds Committee</div>
+                        <input type="checkbox" id="toggleSeeds" checked
+                            onchange="toggleSectionInPreview('seeds', this.checked)">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. VISUAL INSPECTOR MODE -->
+            <div id="mode-inspector" class="studio-mode-content" style="display: none;">
+                <div class="admin-card">
+                    <h2 class="card-title-text">In-Place Element Inspector</h2>
+                    <p class="item-sub" style="margin-bottom: 1.5rem;">Click any text element in the right live preview
+                        window to edit content live!</p>
+
+                    <div class="form-group">
+                        <label class="form-label">Selected Element Selector</label>
+                        <input type="text" id="inspectorSelector" class="form-control" readonly
+                            value="None (Click element in preview)">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Element Text Content</label>
+                        <textarea id="inspectorTextContent" class="form-control"
+                            placeholder="Select an element in live preview..."></textarea>
+                    </div>
+
+                    <button class="btn-admin" style="width: 100%;" onclick="applyInspectorEdit()">⚡ Apply Edits to
+                        Preview</button>
+                </div>
+            </div>
+
+            <!-- 4. CODE & STYLE STUDIO MODE -->
+            <div id="mode-code" class="studio-mode-content" style="display: none;">
+                <div class="admin-card" style="padding: 1.5rem;">
+                    <div class="card-header" style="margin-bottom: 1rem;">
+                        <div>
+                            <h2 class="card-title-text">Code & Style Editor</h2>
+                            <p class="item-sub">Direct file editor with automatic backup generation</p>
+                        </div>
+                        <select id="selectCodeFile" class="form-control"
+                            style="width: auto; margin: 0; padding: 0.5rem 1rem;" onchange="loadSelectedCodeFile()">
+                            <option value="index.html">index.html</option>
+                            <option value="styles.css">styles.css</option>
+                            <option value="about.html">about.html</option>
+                            <option value="gen-ai.html">gen-ai.html</option>
+                            <option value="thread-zero.html">thread-zero.html</option>
+                            <option value="bootcamp-prelude.html">bootcamp-prelude.html</option>
+                            <option value="idea-fest.html">idea-fest.html</option>
+                            <option value="mentors.html">mentors.html</option>
+                            <option value="event-details.html">event-details.html</option>
+                        </select>
+                    </div>
+
+                    <textarea id="codeTextarea" class="code-textarea" spellcheck="false"
+                        placeholder="Loading file content..."></textarea>
+
+                    <div style="display: flex; gap: 0.8rem; margin-top: 1rem;">
+                        <button class="btn-admin" style="flex: 1;" onclick="saveSelectedCodeFile()">💾 Save File to Disk
+                            (Ctrl+S)</button>
+                        <button class="btn-admin btn-secondary" onclick="reloadPreviewIframe()">🔄 Reload
+                            Preview</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- RIGHT PANE: LIVE INTERACTIVE PREVIEW -->
+        <div class="studio-pane-preview">
+            <div class="preview-toolbar">
+                <div style="display: flex; align-items: center; gap: 0.8rem;">
+                    <span
+                        style="font-size: 0.75rem; font-weight: 800; color: var(--admin-subtext); letter-spacing: 0.05em; text-transform: uppercase;">ACTIVE
+                        PAGE:</span>
+                    <select id="selectPreviewPage" class="form-control"
+                        style="width: auto; margin: 0; padding: 0.3rem 0.8rem; font-size: 0.8rem;"
+                        onchange="changePreviewPage(this.value)">
+                        <option value="index.html">Index Page (index.html)</option>
+                        <option value="about.html">About Page (about.html)</option>
+                        <option value="gen-ai.html">Gen-AI Event (gen-ai.html)</option>
+                        <option value="thread-zero.html">Thread Zero (thread-zero.html)</option>
+                        <option value="bootcamp-prelude.html">Prelude Bootcamp (bootcamp-prelude.html)</option>
+                        <option value="idea-fest.html">Idea Fest (idea-fest.html)</option>
+                        <option value="mentors.html">Mentors Page (mentors.html)</option>
+                        <option value="event-details.html">Event Details (event-details.html)</option>
+                    </select>
+                </div>
+
+                <div style="display: flex; gap: 0.5rem;">
+                    <button class="mode-btn active" id="btnModeDesktop" onclick="setPreviewMode('desktop')">💻
+                        Desktop</button>
+                    <button class="mode-btn" id="btnModeMobile" onclick="setPreviewMode('mobile')">📱 Mobile</button>
+                    <button class="mode-btn" onclick="reloadPreviewIframe()">🔄 Refresh</button>
+                </div>
+            </div>
+
+            <div class="preview-iframe-wrapper" id="previewIframeWrapper">
+                <iframe id="previewIframe" src="index.html" onload="onIframeLoaded()"></iframe>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Edit/Add Modal -->
+    <div class="modal" id="adminModal">
+        <div class="modal-content">
+            <h3 id="modalTitle"
+                style="margin-top: 0; margin-bottom: 1.5rem; font-size: 1.5rem; font-weight: 900; text-transform: uppercase;">
+                Add Item</h3>
+            <form id="modalForm" onsubmit="saveModal(event)">
+                <input type="hidden" id="editCategory">
+                <input type="hidden" id="editIndex">
+
+                <div id="modalFields"></div>
+
+                <!-- Native Image Upload Section (Electron IPC) -->
+                <div class="form-group"
+                    style="margin-top: 1.2rem; padding: 1rem; background: #F5F5F7; border-radius: 16px; border: 1px dashed rgba(0,0,0,0.15);">
+                    <label class="form-label">Native Image Asset Uploader</label>
+                    <input type="file" id="nativeImageInput" accept="image/*" class="form-control"
+                        style="margin-bottom: 0.5rem;" onchange="handleNativeImageUpload(event)">
+                    <p class="item-sub" id="uploadStatusText">Upload a photo to automatically save it into project
+                        assets/</p>
+                </div>
+
+                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <button type="button" class="btn-admin btn-secondary" style="flex: 1;"
+                        onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn-admin" style="flex: 1;">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div class="toast" id="toast">Changes Saved Successfully!</div>
+
+    <script src="js/data-store.js"></script>
+    <script src="js/menu-lock.js"></script>
+    <script>
+        let currentHostingStatus = 'offline';
+        let activeInspectorElement = null;
+
+        // Custom Cursor Movement
+        const cursor = document.getElementById('cursor');
+        if (cursor) {
+            document.addEventListener('mousemove', e => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+        }
+
+        // App Preloader Initialization
+        window.addEventListener('DOMContentLoaded', () => {
+            renderGrid('events');
+
+            setTimeout(() => {
+                const preloader = document.getElementById('appPreloader');
+                if (preloader) {
+                    preloader.classList.add('hidden');
+                }
+
+                checkAuthenticationState();
+            }, 1800);
+        });
+
+        function checkAuthenticationState() {
+            if (localStorage.getItem('iedc_admin_authed') === 'true') {
+                authenticateUserSession();
+            } else {
+                document.getElementById('authOverlay').style.display = 'flex';
+            }
+        }
+
+        function togglePasscodeVisibility() {
+            const passInput = document.getElementById('adminPasscode');
+            if (passInput) {
+                passInput.type = passInput.type === 'password' ? 'text' : 'password';
+            }
+        }
+
+        function autoFillDefaultPasscode() {
+            const passInput = document.getElementById('adminPasscode');
+            if (passInput) {
+                passInput.value = 'iedcvjcet';
+                document.getElementById('authErrorMsg').style.display = 'none';
+            }
+        }
+
+        function loginAdmin() {
+            const passInput = document.getElementById('adminPasscode');
+            const pass = passInput ? passInput.value.trim() : '';
+            const errorMsg = document.getElementById('authErrorMsg');
+            const rememberCheck = document.getElementById('rememberSessionCheck');
+
+            if (pass === 'iedcvjcet' || pass === 'admin123') {
+                if (rememberCheck && rememberCheck.checked) {
+                    localStorage.setItem('iedc_admin_authed', 'true');
+                } else {
+                    sessionStorage.setItem('iedc_admin_session', 'true');
+                }
+
+                if (errorMsg) errorMsg.style.display = 'none';
+                authenticateUserSession();
+                showToast('Welcome to IEDC Studio!');
+            } else {
+                if (errorMsg) errorMsg.style.display = 'block';
+                passInput.style.borderColor = '#E11D48';
+            }
+        }
+
+        function authenticateUserSession() {
+            document.body.classList.add('admin-authenticated');
+            document.getElementById('authOverlay').style.display = 'none';
+
+            if (window.electronAPI) {
+                initElectronStudio();
+            }
+        }
+
+        function logoutAdmin() {
+            localStorage.removeItem('iedc_admin_authed');
+            sessionStorage.removeItem('iedc_admin_session');
+            document.body.classList.remove('admin-authenticated');
+            document.getElementById('authOverlay').style.display = 'flex';
+            const passInput = document.getElementById('adminPasscode');
+            if (passInput) passInput.value = '';
+            showToast('Logged out of Studio');
+        }
+
+        // Electron Studio IPC Initialization
+        function initElectronStudio() {
+            if (!window.electronAPI) return;
+
+            window.electronAPI.getHostingStatus().then(status => {
+                updateHostingUI(status);
+            });
+
+            window.electronAPI.onHostingStatusChanged(status => {
+                updateHostingUI(status);
+            });
+        }
+
+        // Hosting Start / Stop Controller
+        function toggleHosting() {
+            if (!window.electronAPI) {
+                alert('Hosting control requires running inside the Desktop App.');
+                return;
+            }
+
+            const btn = document.getElementById('btnToggleHosting');
+            if (currentHostingStatus === 'online' || currentHostingStatus === 'starting') {
+                btn.innerText = '⏳ STOPPING HOST...';
+                window.electronAPI.stopHosting().then(() => {
+                    showToast('Website Unhosted (Offline)');
+                });
+            } else {
+                btn.innerText = '⏳ STARTING TUNNEL...';
+                window.electronAPI.startHosting().then(res => {
+                    if (res.success) {
+                        showToast('Website Live Online!');
+                    } else {
+                        alert('Hosting Error: ' + res.error);
+                    }
+                });
+            }
+        }
+
+        function updateHostingUI(statusObj) {
+            currentHostingStatus = statusObj.status;
+            const badge = document.getElementById('hostingStatusPill');
+            const text = document.getElementById('hostingStatusText');
+            const btn = document.getElementById('btnToggleHosting');
+            const urlContainer = document.getElementById('hostingUrlContainer');
+            const urlInput = document.getElementById('liveUrlInput');
+
+            if (badge) badge.className = 'hosting-status-pill ' + statusObj.status;
+
+            if (statusObj.status === 'online') {
+                if (text) text.innerText = '🟢 LIVE ONLINE';
+                if (btn) { btn.innerText = '⏹ UNHOST WEBSITE'; btn.className = 'btn-admin btn-danger btn-sm'; }
+                if (urlContainer) urlContainer.style.display = 'flex';
+                if (urlInput) urlInput.value = statusObj.url || '';
+            } else if (statusObj.status === 'starting') {
+                if (text) text.innerText = '🟡 STARTING...';
+                if (btn) { btn.innerText = '⏳ LAUNCHING...'; btn.className = 'btn-admin btn-secondary btn-sm'; }
+                if (urlContainer) urlContainer.style.display = 'none';
+            } else {
+                if (text) text.innerText = '🔴 OFFLINE';
+                if (btn) { btn.innerText = '🚀 HOST WEBSITE LIVE'; btn.className = 'btn-admin btn-success btn-sm'; }
+                if (urlContainer) urlContainer.style.display = 'none';
+            }
+        }
+
+        function copyLiveUrl() {
+            const input = document.getElementById('liveUrlInput');
+            if (input && input.value) {
+                navigator.clipboard.writeText(input.value);
+                showToast('Live URL Copied to Clipboard!');
+            }
+        }
+
+        // Studio View Mode Switcher
+        function switchStudioMode(mode) {
+            document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+            if (event && event.target) event.target.classList.add('active');
+
+            document.querySelectorAll('.studio-mode-content').forEach(c => c.style.display = 'none');
+            const targetMode = document.getElementById('mode-' + mode);
+            if (targetMode) targetMode.style.display = 'block';
+
+            if (mode === 'code') {
+                loadSelectedCodeFile();
+            }
+        }
+
+        function switchDataSubTab(tab) {
+            document.querySelectorAll('#mode-data .tab-btn').forEach(b => b.classList.remove('active'));
+            if (event && event.target) event.target.classList.add('active');
+
+            document.querySelectorAll('.data-subtab').forEach(s => s.style.display = 'none');
+            const targetSub = document.getElementById('subtab-' + tab);
+            if (targetSub) targetSub.style.display = 'block';
+            renderGrid(tab);
+        }
+
+        // Viewport Switcher
+        function setPreviewMode(mode) {
+            const wrapper = document.getElementById('previewIframeWrapper');
+            document.getElementById('btnModeDesktop').classList.toggle('active', mode === 'desktop');
+            document.getElementById('btnModeMobile').classList.toggle('active', mode === 'mobile');
+
+            if (mode === 'mobile') {
+                wrapper.classList.add('mobile-mode');
+            } else {
+                wrapper.classList.remove('mobile-mode');
+            }
+        }
+
+        function changePreviewPage(page) {
+            document.getElementById('previewIframe').src = page;
+        }
+
+        function reloadPreviewIframe() {
+            const iframe = document.getElementById('previewIframe');
+            if (iframe) iframe.src = iframe.src;
+        }
+
+        // Theme Engine Customizer
+        function previewThemeChange() {
+            const accent = document.getElementById('themeAccent').value;
+            const cyan = document.getElementById('themeCyan').value;
+            const purple = document.getElementById('themePurple').value;
+            const bg = document.getElementById('themeBg').value;
+
+            document.documentElement.style.setProperty('--admin-accent', accent);
+
+            const iframe = document.getElementById('previewIframe');
+            if (iframe && iframe.contentWindow) {
+                iframe.contentWindow.document.documentElement.style.setProperty('--accent', accent);
+                iframe.contentWindow.document.documentElement.style.setProperty('--neon-cyan', cyan);
+                iframe.contentWindow.document.documentElement.style.setProperty('--neon-purple', purple);
+                iframe.contentWindow.document.body.style.backgroundColor = bg;
+            }
+        }
+
+        function saveThemeToDisk() {
+            const cssVars = {
+                '--accent': document.getElementById('themeAccent').value,
+                '--neon-cyan': document.getElementById('themeCyan').value,
+                '--neon-purple': document.getElementById('themePurple').value,
+                '--bg-dark': document.getElementById('themeBg').value
+            };
+
+            if (window.electronAPI) {
+                window.electronAPI.saveTheme(cssVars).then(res => {
+                    if (res.success) {
+                        showToast('Theme Saved to styles.css!');
+                        reloadPreviewIframe();
+                    }
+                });
+            } else {
+                showToast('Theme Applied in Memory!');
+            }
+        }
+
+        function toggleSectionInPreview(sectionId, isVisible) {
+            const iframe = document.getElementById('previewIframe');
+            if (iframe && iframe.contentDocument) {
+                const target = iframe.contentDocument.getElementById(sectionId);
+                if (target) {
+                    target.style.display = isVisible ? '' : 'none';
+                }
+            }
+        }
+
+        // Visual Inspector in Iframe
+        function onIframeLoaded() {
+            const iframe = document.getElementById('previewIframe');
+            if (!iframe || !iframe.contentDocument) return;
+
+            iframe.contentDocument.addEventListener('click', (e) => {
+                const textTarget = e.target.closest('h1, h2, h3, h4, p, span, a, button');
+                if (textTarget) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    activeInspectorElement = textTarget;
+                    document.getElementById('inspectorSelector').value = textTarget.tagName.toLowerCase() + (textTarget.className ? '.' + textTarget.className.split(' ').join('.') : '');
+                    document.getElementById('inspectorTextContent').value = textTarget.innerText;
+                    switchStudioMode('inspector');
+                    showToast('Element Loaded in Inspector');
+                }
+            });
+        }
+
+        function applyInspectorEdit() {
+            if (activeInspectorElement) {
+                activeInspectorElement.innerText = document.getElementById('inspectorTextContent').value;
+                showToast('Text Updated in Preview!');
+            } else {
+                alert('Select an element in the preview first!');
+            }
+        }
+
+        // Code Editor Mode
+        function loadSelectedCodeFile() {
+            const fileName = document.getElementById('selectCodeFile').value;
+            const textarea = document.getElementById('codeTextarea');
+            textarea.value = 'Loading ' + fileName + '...';
+
+            if (window.electronAPI) {
+                window.electronAPI.readFile(fileName).then(content => {
+                    textarea.value = content;
+                }).catch(err => {
+                    textarea.value = 'Error reading file: ' + err.message;
+                });
+            } else {
+                fetch(fileName).then(r => r.text()).then(txt => { textarea.value = txt; });
+            }
+        }
+
+        function saveSelectedCodeFile() {
+            const fileName = document.getElementById('selectCodeFile').value;
+            const content = document.getElementById('codeTextarea').value;
+
+            if (window.electronAPI) {
+                window.electronAPI.saveFile(fileName, content).then(res => {
+                    if (res.success) {
+                        showToast(fileName + ' Saved to Disk!');
+                        reloadPreviewIframe();
+                    }
+                });
+            } else {
+                showToast('Save requires running in Desktop App!');
+            }
+        }
+
+        // Keyboard Shortcut Ctrl+S for Code Saving
+        document.addEventListener('keydown', e => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                e.preventDefault();
+                saveSelectedCodeFile();
+            }
+        });
+
+        // Native Image File Upload (Electron IPC)
+        function handleNativeImageUpload(e) {
+            const file = e.target.files[0];
+            const status = document.getElementById('uploadStatusText');
+            if (file && window.electronAPI) {
+                status.innerText = '⏳ Uploading ' + file.name + '...';
+                const reader = new FileReader();
+                reader.onload = function (evt) {
+                    window.electronAPI.uploadAsset(file.name, evt.target.result).then(res => {
+                        if (res.success) {
+                            status.innerText = '✅ Saved: ' + res.relativePath;
+                            const imageInput = document.querySelector('#modalFields input[name="image"], #modalFields input[name="poster"]');
+                            if (imageInput) imageInput.value = res.relativePath;
+                            showToast('Image Uploaded to assets/');
+                        } else {
+                            status.innerText = '❌ Error: ' + res.error;
+                        }
+                    });
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Standard Data Grid Functions
+        function renderGrid(cat) {
+            const grid = document.getElementById('grid-' + cat);
+            if (!grid) return;
+            grid.innerHTML = '';
+            const items = IEDCData.get(cat) || [];
+
+            if (items.length === 0) {
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding: 2rem; color: var(--admin-subtext);">No ${cat} added yet. Click "+ Add" to create one.</div>`;
+                return;
+            }
+
+            items.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'item-card';
+                const imgUrl = item.image || item.poster || 'assets/favicon.ico';
+                card.innerHTML = `
+                    <img src="${imgUrl}" alt="${item.title || item.name}" onclick="openAdminImagePreview('${imgUrl}')">
+                    <div style="font-weight: 800; font-size: 1rem; text-transform: uppercase;">${item.title || item.name || 'Untitled'}</div>
+                    <div style="font-size: 0.8rem; color: var(--admin-subtext);">${item.date || item.role || item.description || ''}</div>
+                    <div class="item-actions">
+                        <button class="btn-admin btn-secondary btn-sm" onclick="editItem('${cat}', ${index})">✏️ Edit</button>
+                        <button class="btn-admin btn-danger btn-sm" onclick="deleteItem('${cat}', ${index})">🗑️ Delete</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function openModal(cat, index = -1) {
+            document.getElementById('editCategory').value = cat;
+            document.getElementById('editIndex').value = index;
+            const fieldsContainer = document.getElementById('modalFields');
+            fieldsContainer.innerHTML = '';
+
+            const item = index >= 0 ? IEDCData.get(cat)[index] : {};
+            document.getElementById('modalTitle').innerText = (index >= 0 ? 'Edit ' : 'Add ') + cat.slice(0, -1);
+
+            let schema = [];
+            if (cat === 'events') {
+                schema = [
+                    { name: 'title', label: 'Event Title', type: 'text' },
+                    { name: 'date', label: 'Date & Time', type: 'text' },
+                    { name: 'venue', label: 'Venue', type: 'text' },
+                    { name: 'image', label: 'Image URL / Asset Path', type: 'text' },
+                    { name: 'description', label: 'Description', type: 'textarea' },
+                    { name: 'registerLink', label: 'Registration Link', type: 'text' }
+                ];
+            } else if (cat === 'flagships') {
+                schema = [
+                    { name: 'title', label: 'Flagship Title', type: 'text' },
+                    { name: 'tagline', label: 'Tagline', type: 'text' },
+                    { name: 'poster', label: 'Poster Asset Path', type: 'text' },
+                    { name: 'description', label: 'Full Description', type: 'textarea' }
+                ];
+            } else if (cat === 'announcements') {
+                schema = [
+                    { name: 'title', label: 'Bulletin Title', type: 'text' },
+                    { name: 'date', label: 'Post Date', type: 'text' },
+                    { name: 'content', label: 'Announcement Text', type: 'textarea' }
+                ];
+            } else if (cat === 'execom' || cat === 'seeds' || cat === 'mentors') {
+                schema = [
+                    { name: 'name', label: 'Full Name', type: 'text' },
+                    { name: 'role', label: 'Role / Designation', type: 'text' },
+                    { name: 'image', label: 'Photo Asset Path', type: 'text' },
+                    { name: 'linkedin', label: 'LinkedIn Profile URL', type: 'text' }
+                ];
+            }
+
+            schema.forEach(field => {
+                const group = document.createElement('div');
+                group.className = 'form-group';
+                const val = item[field.name] || '';
+                if (field.type === 'textarea') {
+                    group.innerHTML = `<label class="form-label">${field.label}</label><textarea name="${field.name}" class="form-control">${val}</textarea>`;
+                } else {
+                    group.innerHTML = `<label class="form-label">${field.label}</label><input type="${field.type}" name="${field.name}" class="form-control" value="${val}">`;
+                }
+                fieldsContainer.appendChild(group);
+            });
+
+            document.getElementById('adminModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('adminModal').classList.remove('active');
+        }
+
+        function saveModal(e) {
+            e.preventDefault();
+            const cat = document.getElementById('editCategory').value;
+            const index = parseInt(document.getElementById('editIndex').value);
+            const formData = new FormData(e.target);
+            const newItem = {};
+
+            formData.forEach((val, key) => {
+                if (key !== 'editCategory' && key !== 'editIndex') {
+                    newItem[key] = val;
+                }
+            });
+
+            if (newItem.image) newItem.img = newItem.image;
+            if (newItem.img) newItem.image = newItem.img;
+
+            if (index >= 0) {
+                IEDCData.update(cat, index, newItem);
+            } else {
+                IEDCData.add(cat, newItem);
+            }
+
+            closeModal();
+            renderGrid(cat);
+            showToast('Saved Successfully!');
+            reloadPreviewIframe();
+        }
+
+        function editItem(cat, index) { openModal(cat, index); }
+        function deleteItem(cat, index) {
+            if (confirm('Delete this item?')) {
+                IEDCData.delete(cat, index);
+                renderGrid(cat);
+                showToast('Item Deleted!');
+                reloadPreviewIframe();
+            }
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.innerText = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3000);
+        }
+
+        function exportData() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(IEDCData.getAll(), null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", "iedc_website_backup.json");
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        function importData(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (evt) {
+                    try {
+                        const imported = JSON.parse(evt.target.result);
+                        IEDCData.setAll(imported);
+                        location.reload();
+                    } catch (err) { alert('Invalid JSON format!'); }
+                };
+                reader.readAsText(file);
+            }
+        }
+
+        function resetDefaults() {
+            if (confirm('Reset website data to factory defaults?')) {
+                localStorage.removeItem('iedc_website_data');
+                location.reload();
+            }
+        }
+
+        function openAdminImagePreview(src) {
+            const modal = document.getElementById('adminImagePreviewModal');
+            const img = document.getElementById('adminPreviewImg');
+            if (modal && img) {
+                img.src = src;
+                modal.style.display = 'flex';
+            }
+        }
+
+        function closeAdminImagePreview() {
+            const modal = document.getElementById('adminImagePreviewModal');
+            if (modal) modal.style.display = 'none';
+        }
+    </script>
+
+    <!-- Full-size Photo Inspector Modal -->
+    <div id="adminImagePreviewModal"
+        style="display:none; position:fixed; inset:0; background:rgba(255,255,255,0.95); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); z-index:999999; align-items:center; justify-content:center; padding:2rem;"
+        onclick="closeAdminImagePreview()">
+        <div style="position:relative; max-width:90vw; max-height:90vh; text-align:center;"
+            onclick="event.stopPropagation()">
+            <div style="position:absolute; top:-40px; right:0; color:#000; font-size:1.1rem; font-weight:bold; cursor:pointer; background:rgba(0,0,0,0.06); padding:0.4rem 1rem; border-radius:100px;"
+                onclick="closeAdminImagePreview()">✕ CLOSE</div>
+            <img id="adminPreviewImg" src=""
+                style="max-width:100%; max-height:82vh; border-radius:24px; border:1px solid rgba(0,0,0,0.15); box-shadow:0 25px 60px rgba(0,0,0,0.15); object-fit:contain;">
+        </div>
+    </div>
+
+    <!-- Admin App APK & PWA Download Modal -->
+    <div class="modal" id="adminApkModal">
+        <div class="modal-content" style="max-width: 500px; text-align: center; background: #0A0A0E; border: 1px solid rgba(255,255,255,0.15); color: #FFF; border-radius: 28px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h3 style="margin: 0; font-size: 1.4rem; font-weight: 900;">📱 IEDC ADMIN APK & APP</h3>
+                <span onclick="closeAdminApkModal()" style="cursor: pointer; font-size: 1.4rem; color: #FFF;">✕</span>
+            </div>
+            
+            <img src="assets/icon-192.png" style="width: 85px; height: 85px; border-radius: 20px; box-shadow: 0 0 25px rgba(56, 189, 248, 0.3); margin-bottom: 1rem;">
+            <h4 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 0.4rem;">IEDC ADMIN STUDIO APP</h4>
+            <p style="font-size: 0.88rem; color: rgba(255,255,255,0.7); line-height: 1.5; margin-bottom: 1.5rem;">
+                Install the official IEDC Studio Admin App directly on your Android mobile phone to edit content, manage servers, and control website layout anywhere!
+            </p>
+
+            <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                <a href="IEDC-Studio-Setup.exe" download="IEDC-Studio-Setup.exe" class="btn-admin" style="display: inline-block; width: 100%; padding: 0.85rem; font-size: 0.9rem; font-weight: 800; border-radius: 100px; text-decoration: none; text-align: center; background: #6366F1; color: #FFF; border: none;">
+                    💻 DOWNLOAD WINDOWS APP (.EXE)
+                </a>
+                <button id="btnAdminPwaPrompt" class="btn-admin btn-success" style="width: 100%; padding: 0.85rem; font-size: 0.95rem; font-weight: 800; border-radius: 100px; cursor: pointer; background: #10B981; color: #FFF; border: none;" onclick="triggerAdminPwaInstall()">
+                    📲 INSTALL ADMIN APP ON ANDROID
+                </button>
+                <a href="IEDC-Admin-Studio.apk" download="IEDC-Admin-Studio.apk" class="btn-admin" style="display: inline-block; width: 100%; padding: 0.85rem; font-size: 0.9rem; font-weight: 800; border-radius: 100px; text-decoration: none; text-align: center; background: #3B82F6; color: #FFF; border: none;">
+                    ⬇️ DOWNLOAD ADMIN APK FILE (.APK)
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Service Worker for Admin Studio -->
+    <script>
+        let adminDeferredPrompt = null;
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw-admin.js').catch(err => console.log('Admin SW reg failed:', err));
+            });
+        }
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            adminDeferredPrompt = e;
+        });
+
+        function openAdminApkModal() {
+            const modal = document.getElementById('adminApkModal');
+            if (modal) modal.classList.add('active');
+        }
+
+        function closeAdminApkModal() {
+            const modal = document.getElementById('adminApkModal');
+            if (modal) modal.classList.remove('active');
+        }
+
+        function triggerAdminPwaInstall() {
+            if (adminDeferredPrompt) {
+                adminDeferredPrompt.prompt();
+                adminDeferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User installed Admin App');
+                    }
+                    adminDeferredPrompt = null;
+                    closeAdminApkModal();
+                });
+            } else {
+                alert('📱 To Install Admin App on Android:\n\n1. Open admin.html link in Chrome / Edge on your Android phone.\n2. Tap the 3 dots (⋮) menu in top right.\n3. Tap "Add to Home screen" or "Install App".\n\nIt will install as a native standalone Admin Studio App!');
+            }
+        }
+    </script>
+</body>
+
+</html>
